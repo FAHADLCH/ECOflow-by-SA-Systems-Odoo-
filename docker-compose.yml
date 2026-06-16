@@ -17,7 +17,7 @@ services:
   odoo:
     # Override the Odoo version with: ODOO_TAG=19 docker compose up
     # Supported tags for this project: 18, 19
-    image: odoo:${ODOO_TAG:-18}
+    image: odoo:${ODOO_TAG:-19}
     container_name: ecoflow_odoo
     depends_on:
       db:

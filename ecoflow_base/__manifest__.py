@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "ECOFLOW Base",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "summary": "Shared foundation for the ECOFLOW environmental operations ERP",
     "description": """
 ECOFLOW Base

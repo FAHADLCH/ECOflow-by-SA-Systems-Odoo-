@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "ECOFLOW Collection",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "summary": "Service catalog, service orders and proof-of-service capture",
     "description": """
 ECOFLOW Collection

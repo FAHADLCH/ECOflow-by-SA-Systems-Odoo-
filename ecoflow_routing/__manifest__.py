@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "ECOFLOW Routing",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "summary": "Route plans, stop sequencing and dispatch for collection",
     "description": """
 ECOFLOW Routing

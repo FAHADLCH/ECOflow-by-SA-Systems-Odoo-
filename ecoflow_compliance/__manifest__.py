@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "ECOFLOW Compliance",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "summary": "Waste codes, electronic manifests and permit register",
     "description": """
 ECOFLOW Compliance

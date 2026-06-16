@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "ECOFLOW Dashboard",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "summary": "SA Systems branded cockpit, KPI dashboards, graphical reporting and settings",
     "description": """
 ECOFLOW Dashboard & Branding
