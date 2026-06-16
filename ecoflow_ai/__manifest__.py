@@ -25,7 +25,7 @@ No data leaves your server. All models are deterministic and explainable.
     "website": "https://sasystems.solutions/custom-web-app-development",
     "support": "info@sasystems.solutions",
     "license": "OPL-1",
-    "price": 10.00,
+    "price": 0.00,
     "currency": "USD",
     "depends": [
         "ecoflow_dashboard",

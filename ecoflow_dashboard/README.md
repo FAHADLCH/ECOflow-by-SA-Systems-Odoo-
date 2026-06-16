@@ -1,6 +1,6 @@
-# ECOFLOW Dashboard & Branding
+# ECOFLOW Dashboard
 
-> Sa Systems branded cockpit, KPI dashboards, graphical reporting and settings
+> SA Systems branded cockpit, KPI dashboards, graphical reporting and settings
 
 Part of the **ECOFLOW by SA Systems** environmental-operations suite for Odoo.
 
@@ -15,8 +15,8 @@ Part of the **ECOFLOW by SA Systems** environmental-operations suite for Odoo.
 
 ## Compatibility
 
-- **Odoo 18.0 and 19.0** (Community & Enterprise) from a single codebase.
-- Series-agnostic `version` (`1.0.0`) — Odoo prefixes the running series automatically.
+- **Odoo 18.0** (Community & Enterprise).
+- Manifest version `18.0.1.0.0` matches the `18.0` series branch.
 - No external Python dependencies.
 
 ## Dependencies
@@ -34,8 +34,7 @@ odoo -d ecoflow -i ecoflow_dashboard --stop-after-init
 
 ## License & Support
 
-Published by **SA Systems** under the **OPL-1** license — a paid Odoo
-App Store app ($5.00 USD).
+Published by **SA Systems** under the **OPL-1** license as a **free add-on** to the ECOFLOW suite — unlocked by the one paid app, **ECOFLOW Base**.
 
 - Web: https://sasystems.solutions/custom-web-app-development
 - Support: info@sasystems.solutions

@@ -15,8 +15,8 @@ Part of the **ECOFLOW by SA Systems** environmental-operations suite for Odoo.
 
 ## Compatibility
 
-- **Odoo 18.0 and 19.0** (Community & Enterprise) from a single codebase.
-- Series-agnostic `version` (`1.0.0`) — Odoo prefixes the running series automatically.
+- **Odoo 18.0** (Community & Enterprise).
+- Manifest version `18.0.1.0.0` matches the `18.0` series branch.
 - No external Python dependencies.
 
 ## Dependencies
@@ -34,8 +34,7 @@ odoo -d ecoflow -i ecoflow_base --stop-after-init
 
 ## License & Support
 
-Published by **SA Systems** under the **OPL-1** license — a paid Odoo
-App Store app ($5.00 USD).
+Published by **SA Systems** under the **OPL-1** license. This is the **single paid app** for the entire ECOFLOW suite ($299.00 USD). Purchasing it unlocks every other ECOFLOW module as a free add-on.
 
 - Web: https://sasystems.solutions/custom-web-app-development
 - Support: info@sasystems.solutions
