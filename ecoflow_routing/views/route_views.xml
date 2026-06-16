@@ -88,7 +88,7 @@
                 <field name="vehicle_id"/>
                 <filter name="planned" string="Planned" domain="[('state','=','planned')]"/>
                 <filter name="dispatched" string="Dispatched" domain="[('state','=','dispatched')]"/>
-                <group expand="0" string="Group By">
+                <group name="group_by">
                     <filter name="group_zone" string="Zone" context="{'group_by':'zone_id'}"/>
                     <filter name="group_date" string="Date" context="{'group_by':'date'}"/>
                     <filter name="group_state" string="Status" context="{'group_by':'state'}"/>

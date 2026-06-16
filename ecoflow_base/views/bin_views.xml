@@ -63,7 +63,7 @@
                 <field name="zone_id"/>
                 <filter name="in_service" string="In Service" domain="[('status','=','in_service')]"/>
                 <filter name="maintenance" string="Maintenance" domain="[('status','=','maintenance')]"/>
-                <group expand="0" string="Group By">
+                <group name="group_by">
                     <filter name="group_zone" string="Zone" context="{'group_by':'zone_id'}"/>
                     <filter name="group_stream" string="Stream" context="{'group_by':'waste_stream_id'}"/>
                     <filter name="group_status" string="Status" context="{'group_by':'status'}"/>

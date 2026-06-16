@@ -57,7 +57,7 @@
                 <field name="holder_id"/>
                 <filter name="expiring" string="Expiring Soon" domain="[('state','=','expiring')]"/>
                 <filter name="expired" string="Expired" domain="[('state','=','expired')]"/>
-                <group expand="0" string="Group By">
+                <group name="group_by">
                     <filter name="group_type" string="Type" context="{'group_by':'permit_type'}"/>
                     <filter name="group_state" string="Status" context="{'group_by':'state'}"/>
                 </group>

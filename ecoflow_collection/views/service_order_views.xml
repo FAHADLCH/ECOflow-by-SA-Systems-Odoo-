@@ -73,7 +73,7 @@
                 <separator/>
                 <filter name="today" string="Today"
                         domain="[('scheduled_date','=',context_today().strftime('%Y-%m-%d'))]"/>
-                <group expand="0" string="Group By">
+                <group name="group_by">
                     <filter name="group_zone" string="Zone" context="{'group_by':'zone_id'}"/>
                     <filter name="group_state" string="Status" context="{'group_by':'state'}"/>
                     <filter name="group_date" string="Scheduled" context="{'group_by':'scheduled_date'}"/>
