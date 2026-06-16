@@ -1,9 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_ai_forecast_user,ai.forecast.user,model_ecoflow_ai_forecast,ecoflow_base.group_ecoflow_user,1,0,0,0
-access_ai_forecast_manager,ai.forecast.manager,model_ecoflow_ai_forecast,ecoflow_base.group_ecoflow_manager,1,1,1,1
-access_bin_prediction_user,bin.prediction.user,model_ecoflow_bin_prediction,ecoflow_base.group_ecoflow_user,1,0,0,0
-access_bin_prediction_dispatcher,bin.prediction.dispatcher,model_ecoflow_bin_prediction,ecoflow_base.group_ecoflow_dispatcher,1,1,1,0
-access_bin_prediction_manager,bin.prediction.manager,model_ecoflow_bin_prediction,ecoflow_base.group_ecoflow_manager,1,1,1,1
-access_ai_insight_user,ai.insight.user,model_ecoflow_ai_insight,ecoflow_base.group_ecoflow_user,1,0,0,0
-access_ai_insight_dispatcher,ai.insight.dispatcher,model_ecoflow_ai_insight,ecoflow_base.group_ecoflow_dispatcher,1,1,1,0
-access_ai_insight_manager,ai.insight.manager,model_ecoflow_ai_insight,ecoflow_base.group_ecoflow_manager,1,1,1,1

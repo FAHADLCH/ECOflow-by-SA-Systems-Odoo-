@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_ecoflow_root" name="ECOFLOW"
+              sequence="20"
+              groups="ecoflow.group_ecoflow_user"/>
+
+    <menuitem id="menu_ecoflow_operations" name="Operations"
+              parent="menu_ecoflow_root" sequence="10"/>
+    <menuitem id="menu_ecoflow_assets" name="Assets"
+              parent="menu_ecoflow_root" sequence="20"/>
+    <menuitem id="menu_ecoflow_config" name="Configuration"
+              parent="menu_ecoflow_root" sequence="90"
+              groups="ecoflow.group_ecoflow_manager"/>
+
+    <menuitem id="menu_ecoflow_bins" name="Bins &amp; Containers"
+              parent="menu_ecoflow_assets" action="action_bin" sequence="10"/>
+
+    <menuitem id="menu_ecoflow_waste_streams" name="Waste Streams"
+              parent="menu_ecoflow_config" action="action_waste_stream" sequence="10"/>
+    <menuitem id="menu_ecoflow_materials" name="Materials"
+              parent="menu_ecoflow_config" action="action_material" sequence="20"/>
+    <menuitem id="menu_ecoflow_zones" name="Service Zones"
+              parent="menu_ecoflow_config" action="action_zone" sequence="30"/>
+</odoo>

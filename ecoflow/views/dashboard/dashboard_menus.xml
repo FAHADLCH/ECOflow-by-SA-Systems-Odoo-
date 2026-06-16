@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Operations Cockpit client action (OWL) -->
+    <record id="action_ecoflow_cockpit" model="ir.actions.client">
+        <field name="name">Operations Cockpit</field>
+        <field name="tag">ecoflow.cockpit</field>
+    </record>
+
+    <!-- Cockpit entry under the ECOFLOW root (AI Command Center is primary) -->
+    <menuitem id="menu_ecoflow_cockpit"
+              name="Operations Cockpit"
+              parent="ecoflow.menu_ecoflow_root"
+              action="action_ecoflow_cockpit"
+              sequence="3"/>
+
+    <!-- Dashboards &amp; Reporting section -->
+    <menuitem id="menu_ecoflow_reporting"
+              name="Dashboards &amp; Reporting"
+              parent="ecoflow.menu_ecoflow_root"
+              sequence="90"/>
+
+    <menuitem id="menu_report_collections"
+              name="Collections Analysis"
+              parent="menu_ecoflow_reporting"
+              action="action_service_order_analysis"
+              sequence="10"/>
+    <menuitem id="menu_report_routing"
+              name="Routing Analysis"
+              parent="menu_ecoflow_reporting"
+              action="action_route_analysis"
+              sequence="20"/>
+    <menuitem id="menu_report_recovery"
+              name="Recovery &amp; Diversion"
+              parent="menu_ecoflow_reporting"
+              action="action_process_batch_analysis"
+              sequence="30"/>
+    <menuitem id="menu_report_weighbridge"
+              name="Weighbridge Analysis"
+              parent="menu_ecoflow_reporting"
+              action="action_weigh_ticket_analysis"
+              sequence="40"/>
+    <menuitem id="menu_report_manifests"
+              name="Manifest Analysis"
+              parent="menu_ecoflow_reporting"
+              action="action_manifest_analysis"
+              sequence="50"/>
+
+    <!-- ECOFLOW settings entry under configuration -->
+    <menuitem id="menu_ecoflow_settings"
+              name="Settings"
+              parent="ecoflow.menu_ecoflow_config"
+              action="action_ecoflow_config_settings"
+              sequence="99"
+              groups="ecoflow.group_ecoflow_manager"/>
+</odoo>

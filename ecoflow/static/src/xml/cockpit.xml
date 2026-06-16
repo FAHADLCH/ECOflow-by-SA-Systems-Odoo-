@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="ecoflow.Cockpit">
+        <div class="o_ecoflow_cockpit">
+            <div class="o_ecoflow_hero">
+                <div class="o_ecoflow_brand">
+                    <img t-att-src="logoUrl" alt="SA Systems"/>
+                    <div class="o_ecoflow_title">
+                        <h1>ECOFLOW Operations Cockpit</h1>
+                        <p>Real-time environmental operations &amp; diversion performance</p>
+                    </div>
+                </div>
+                <button class="o_ecoflow_refresh" t-on-click="() => this.loadKpis()">
+                    <i class="fa fa-refresh me-1"/> Refresh
+                </button>
+            </div>
+
+            <t t-if="state.loading">
+                <div class="o_ecoflow_section_title">Loading KPIs…</div>
+            </t>
+            <t t-else="">
+                <div class="o_ecoflow_section_title">Today's Collections</div>
+                <div class="o_ecoflow_grid">
+                    <div class="o_ecoflow_kpi" t-on-click="() => this.openAction('ecoflow.action_service_order')">
+                        <div class="o_ecoflow_kpi_label">Orders Scheduled</div>
+                        <div class="o_ecoflow_kpi_value"><t t-esc="state.kpis.orders_today"/></div>
+                        <div class="o_ecoflow_kpi_sub">For today</div>
+                    </div>
+                    <div class="o_ecoflow_kpi">
+                        <div class="o_ecoflow_kpi_label">Serviced</div>
+                        <div class="o_ecoflow_kpi_value"><t t-esc="state.kpis.orders_done"/></div>
+                        <div class="o_ecoflow_kpi_sub"><t t-esc="state.kpis.completion_rate"/>% completion</div>
+                        <div class="o_ecoflow_kpi_bar"><span t-attf-style="width: {{completionPct}}%"/></div>
+                    </div>
+                    <div class="o_ecoflow_kpi" t-att-class="{ 'is-red': state.kpis.orders_missed > 0 }">
+                        <div class="o_ecoflow_kpi_label">Missed</div>
+                        <div class="o_ecoflow_kpi_value"><t t-esc="state.kpis.orders_missed"/></div>
+                        <div class="o_ecoflow_kpi_sub">Needs follow-up</div>
+                    </div>
+                    <div class="o_ecoflow_kpi is-blue" t-on-click="() => this.openAction('ecoflow.action_route')">
+                        <div class="o_ecoflow_kpi_label">Active Routes</div>
+                        <div class="o_ecoflow_kpi_value"><t t-esc="state.kpis.active_routes"/></div>
+                        <div class="o_ecoflow_kpi_sub"><t t-esc="state.kpis.planned_distance"/> km planned</div>
+                    </div>
+                </div>
+
+                <div class="o_ecoflow_section_title">Recovery &amp; Diversion</div>
+                <div class="o_ecoflow_grid">
+                    <div class="o_ecoflow_kpi">
+                        <div class="o_ecoflow_kpi_label">Diversion Rate</div>
+                        <div class="o_ecoflow_kpi_value"><t t-esc="state.kpis.diversion_rate"/><small>%</small></div>
+                        <div class="o_ecoflow_kpi_sub">Target <t t-esc="state.kpis.target_diversion"/>%</div>
+                        <div class="o_ecoflow_kpi_bar"><span t-attf-style="width: {{diversionPct}}%"/></div>
+                    </div>
+                    <div class="o_ecoflow_kpi is-blue">
+                        <div class="o_ecoflow_kpi_label">Tonnes Handled</div>
+                        <div class="o_ecoflow_kpi_value"><t t-esc="state.kpis.tonnes_handled"/></div>
+                        <div class="o_ecoflow_kpi_sub">Posted weigh tickets</div>
+                    </div>
+                    <div class="o_ecoflow_kpi">
+                        <div class="o_ecoflow_kpi_label">Recovered Material</div>
+                        <div class="o_ecoflow_kpi_value"><t t-esc="state.kpis.recovered_kg"/><small> kg</small></div>
+                        <div class="o_ecoflow_kpi_sub">From completed batches</div>
+                    </div>
+                </div>
+
+                <div class="o_ecoflow_section_title">Compliance</div>
+                <div class="o_ecoflow_grid">
+                    <div class="o_ecoflow_kpi is-amber" t-on-click="() => this.openAction('ecoflow.action_permit')">
+                        <div class="o_ecoflow_kpi_label">Permits Expiring</div>
+                        <div class="o_ecoflow_kpi_value"><t t-esc="state.kpis.expiring_permits"/></div>
+                        <div class="o_ecoflow_kpi_sub">Within expiry window</div>
+                    </div>
+                    <div class="o_ecoflow_kpi" t-att-class="{ 'is-red': state.kpis.expired_permits > 0 }">
+                        <div class="o_ecoflow_kpi_label">Permits Expired</div>
+                        <div class="o_ecoflow_kpi_value"><t t-esc="state.kpis.expired_permits"/></div>
+                        <div class="o_ecoflow_kpi_sub">Action required</div>
+                    </div>
+                    <div class="o_ecoflow_kpi is-blue" t-on-click="() => this.openAction('ecoflow.action_manifest')">
+                        <div class="o_ecoflow_kpi_label">Open Manifests</div>
+                        <div class="o_ecoflow_kpi_value"><t t-esc="state.kpis.open_manifests"/></div>
+                        <div class="o_ecoflow_kpi_sub">In progress</div>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+</templates>
