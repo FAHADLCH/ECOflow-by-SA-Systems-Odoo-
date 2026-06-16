@@ -16,7 +16,7 @@ waste streams, materials, service zones, bins/containers and partner
     "support": "info@sasystems.solutions",
     "category": "Industries",
     "license": "OPL-1",
-    "price": 10.00,
+    "price": 299.00,
     "currency": "USD",
     "depends": ["base", "mail", "stock"],
     "data": [

@@ -57,6 +57,22 @@ for mod, feats in FEATURES.items():
     summary = man.get("summary", "").strip()
     depends = ", ".join("`%s`" % d for d in man.get("depends", []))
     feat_md = "\n".join("- %s" % f for f in feats)
+    version = man.get("version", "")
+    series = ".".join(version.split(".")[:2]) if version.count(".") >= 1 else version
+    price = float(man.get("price", 0) or 0)
+    if price > 0:
+        license_blurb = (
+            f"Published by **SA Systems** under the **{man.get('license')}** license. "
+            f"This is the **single paid app** for the entire ECOFLOW suite "
+            f"(${price:.2f} {man.get('currency')}). Purchasing it unlocks every other "
+            f"ECOFLOW module as a free add-on."
+        )
+    else:
+        license_blurb = (
+            f"Published by **SA Systems** under the **{man.get('license')}** license as a "
+            f"**free add-on** to the ECOFLOW suite — unlocked by the one paid app, "
+            f"**ECOFLOW Base**."
+        )
     readme = f"""# {name}
 
 > {summary}
@@ -71,8 +87,8 @@ Part of the **ECOFLOW by SA Systems** environmental-operations suite for Odoo.
 
 ## Compatibility
 
-- **Odoo 18.0 and 19.0** (Community & Enterprise) from a single codebase.
-- Series-agnostic `version` (`{man.get('version')}`) — Odoo prefixes the running series automatically.
+- **Odoo {series}** (Community & Enterprise).
+- Manifest version `{man.get('version')}` matches the `{series}` series branch.
 - No external Python dependencies.
 
 ## Dependencies
@@ -90,8 +106,7 @@ odoo -d ecoflow -i {mod} --stop-after-init
 
 ## License & Support
 
-Published by **SA Systems** under the **{man.get('license')}** license — a paid Odoo
-App Store app (${man.get('price'):.2f} {man.get('currency')}).
+{license_blurb}
 
 - Web: https://sasystems.solutions/custom-web-app-development
 - Support: info@sasystems.solutions
