@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="ecoflow.Center">
+        <div class="o_ecoflow_ai_center">
+
+            <!-- Hero -->
+            <div class="o_ai_hero">
+                <div class="o_ai_hero_left">
+                    <img t-att-src="logoUrl" alt="SA Systems" class="o_ai_logo"/>
+                    <div>
+                        <h1>ECOFLOW <span class="o_ai_accent">AI Command Center</span></h1>
+                        <p>Predictive waste &amp; recycling operations — powered by SA Systems</p>
+                    </div>
+                </div>
+                <div class="o_ai_hero_right">
+                    <span class="o_ai_region" t-esc="state.framework"/>
+                    <button class="btn o_ai_refresh" t-on-click="refresh" t-att-disabled="state.refreshing">
+                        <i class="fa fa-bolt"/>
+                        <t t-if="state.refreshing">Analysing…</t>
+                        <t t-else="">Run AI</t>
+                    </button>
+                </div>
+            </div>
+
+            <t t-if="state.loading">
+                <div class="o_ai_loading"><i class="fa fa-circle-o-notch fa-spin"/> Loading intelligence…</div>
+            </t>
+            <t t-else="">
+
+            <!-- AI status strip -->
+            <div class="o_ai_strip">
+                <div class="o_ai_chip is-critical" t-on-click="() => this.openAction('ecoflow.action_ai_insight')">
+                    <span class="o_ai_chip_num" t-esc="state.ai.critical"/>
+                    <span class="o_ai_chip_lbl">Critical</span>
+                </div>
+                <div class="o_ai_chip is-warning" t-on-click="() => this.openAction('ecoflow.action_ai_insight')">
+                    <span class="o_ai_chip_num" t-esc="state.ai.warnings"/>
+                    <span class="o_ai_chip_lbl">Warnings</span>
+                </div>
+                <div class="o_ai_chip is-opp" t-on-click="() => this.openAction('ecoflow.action_ai_insight')">
+                    <span class="o_ai_chip_num" t-esc="state.ai.opportunities"/>
+                    <span class="o_ai_chip_lbl">Opportunities</span>
+                </div>
+                <div class="o_ai_chip is-collect" t-on-click="() => this.openAction('ecoflow.action_bin_prediction')">
+                    <span class="o_ai_chip_num" t-esc="state.ai.collect_now"/>
+                    <span class="o_ai_chip_lbl">Collect Now</span>
+                </div>
+            </div>
+
+            <div class="o_ai_grid">
+                <!-- LEFT: charts -->
+                <div class="o_ai_col_main">
+                    <!-- Trend + forecast chart -->
+                    <div class="o_ai_card">
+                        <div class="o_ai_card_head">
+                            <h3><i class="fa fa-line-chart"/> Collections — 14-day actual &amp; 7-day AI forecast</h3>
+                            <div class="o_ai_legend">
+                                <span><i class="dot done"/> Serviced</span>
+                                <span><i class="dot missed"/> Missed</span>
+                                <span><i class="dot fc"/> Forecast</span>
+                            </div>
+                        </div>
+                        <div class="o_ai_chart_wrap">
+                            <t t-if="trendChart.hasData">
+                                <svg t-att-viewBox="'0 0 ' + trendChart.W + ' ' + trendChart.H" class="o_ai_svg" preserveAspectRatio="xMidYMid meet">
+                                    <defs>
+                                        <linearGradient id="ecoFill" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%" stop-color="#CC0000" stop-opacity="0.28"/>
+                                            <stop offset="100%" stop-color="#CC0000" stop-opacity="0"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <path t-att-d="trendChart.doneArea" fill="url(#ecoFill)"/>
+                                    <path t-att-d="trendChart.doneLine" fill="none" stroke="#CC0000" stroke-width="2.5" stroke-linejoin="round"/>
+                                    <path t-att-d="trendChart.missedLine" fill="none" stroke="#9ca3af" stroke-width="1.8" stroke-dasharray="3 3"/>
+                                    <path t-att-d="trendChart.forecastLine" fill="none" stroke="#1E2629" stroke-width="2.4" stroke-dasharray="6 4"/>
+                                    <t t-foreach="trendChart.labels" t-as="lb" t-key="lb_index">
+                                        <text t-if="lb.show" t-att-x="lb.x" t-att-y="trendChart.H - 6" class="o_ai_axis" text-anchor="middle" t-esc="lb.text"/>
+                                    </t>
+                                </svg>
+                            </t>
+                            <t t-else="">
+                                <div class="o_ai_empty">No collection history yet.</div>
+                            </t>
+                        </div>
+                    </div>
+
+                    <!-- KPI tiles row -->
+                    <div class="o_ai_kpi_row">
+                        <div class="o_ai_kpi" t-on-click="() => this.openAction('ecoflow.action_service_order')">
+                            <span class="o_ai_kpi_lbl">Orders Today</span>
+                            <span class="o_ai_kpi_val" t-esc="state.kpis.orders_today"/>
+                            <span class="o_ai_kpi_sub"><t t-esc="completionPct"/>% serviced</span>
+                            <div class="o_ai_bar"><div class="o_ai_bar_fill" t-attf-style="width:{{completionPct}}%"/></div>
+                        </div>
+                        <div class="o_ai_kpi is-blue" t-on-click="() => this.openAction('ecoflow.action_route')">
+                            <span class="o_ai_kpi_lbl">Active Routes</span>
+                            <span class="o_ai_kpi_val" t-esc="state.kpis.active_routes"/>
+                            <span class="o_ai_kpi_sub"><t t-esc="state.kpis.planned_distance"/> km planned</span>
+                        </div>
+                        <div class="o_ai_kpi is-green" t-on-click="() => this.openAction('ecoflow.action_process_batch')">
+                            <span class="o_ai_kpi_lbl">Diversion Rate</span>
+                            <span class="o_ai_kpi_val"><t t-esc="Math.round(state.kpis.diversion_rate)"/>%</span>
+                            <span class="o_ai_kpi_sub">Target <t t-esc="Math.round(state.kpis.target_diversion)"/>%</span>
+                            <div class="o_ai_bar"><div class="o_ai_bar_fill is-green" t-attf-style="width:{{diversionPct}}%"/></div>
+                        </div>
+                        <div class="o_ai_kpi is-amber" t-on-click="() => this.openAction('ecoflow.action_permit')">
+                            <span class="o_ai_kpi_lbl">Permits Expiring</span>
+                            <span class="o_ai_kpi_val" t-esc="state.kpis.expiring_permits"/>
+                            <span class="o_ai_kpi_sub"><t t-esc="state.kpis.expired_permits"/> expired</span>
+                        </div>
+                    </div>
+
+                    <!-- Recovery mix doughnut -->
+                    <div class="o_ai_card">
+                        <div class="o_ai_card_head">
+                            <h3><i class="fa fa-recycle"/> Recovered material mix</h3>
+                        </div>
+                        <div class="o_ai_mix">
+                            <t t-if="recoveryMix.hasData">
+                                <svg viewBox="0 0 180 180" class="o_ai_doughnut">
+                                    <circle cx="90" cy="90" t-att-r="recoveryMix.R" fill="none" stroke="#eef0f2" t-att-stroke-width="recoveryMix.SW"/>
+                                    <t t-foreach="recoveryMix.segments" t-as="seg" t-key="seg_index">
+                                        <circle cx="90" cy="90" t-att-r="recoveryMix.R" fill="none"
+                                                t-att-stroke="seg.color" t-att-stroke-width="recoveryMix.SW"
+                                                t-att-stroke-dasharray="seg.dash" t-att-stroke-dashoffset="seg.offset"
+                                                transform="rotate(-90 90 90)" stroke-linecap="butt"/>
+                                    </t>
+                                    <text x="90" y="86" text-anchor="middle" class="o_ai_dough_big" t-esc="recoveryMix.total"/>
+                                    <text x="90" y="104" text-anchor="middle" class="o_ai_dough_sm">kg recovered</text>
+                                </svg>
+                                <div class="o_ai_mix_legend">
+                                    <t t-foreach="recoveryMix.segments" t-as="seg" t-key="seg_index">
+                                        <div class="o_ai_mix_row">
+                                            <i class="o_ai_mix_dot" t-attf-style="background:{{seg.color}}"/>
+                                            <span class="o_ai_mix_name" t-esc="seg.label"/>
+                                            <span class="o_ai_mix_val"><t t-esc="seg.value"/> kg · <t t-esc="seg.pct"/>%</span>
+                                        </div>
+                                    </t>
+                                </div>
+                            </t>
+                            <t t-else="">
+                                <div class="o_ai_empty">No completed recovery batches yet.</div>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT: AI insights feed -->
+                <div class="o_ai_col_side">
+                    <div class="o_ai_card o_ai_insights">
+                        <div class="o_ai_card_head">
+                            <h3><i class="fa fa-lightbulb-o"/> AI Insights</h3>
+                            <span class="o_ai_count" t-esc="state.ai.insights.length"/>
+                        </div>
+                        <t t-if="state.ai.insights.length === 0">
+                            <div class="o_ai_empty">All clear — no issues detected. Click <b>Run AI</b> to re-scan.</div>
+                        </t>
+                        <t t-foreach="state.ai.insights" t-as="ins" t-key="ins.id">
+                            <div t-att-class="severityClass(ins.severity)" t-on-click="() => this.openInsight(ins)">
+                                <div class="o_ai_ins_top">
+                                    <i t-attf-class="fa {{ins.icon}} o_ai_ins_icon"/>
+                                    <span class="o_ai_ins_title" t-esc="ins.name"/>
+                                </div>
+                                <p class="o_ai_ins_desc" t-esc="ins.description"/>
+                                <div class="o_ai_ins_reco" t-if="ins.recommendation">
+                                    <i class="fa fa-arrow-circle-right"/> <span t-esc="ins.recommendation"/>
+                                </div>
+                                <div class="o_ai_ins_foot">
+                                    <span class="o_ai_ins_cat" t-esc="ins.category"/>
+                                    <span class="o_ai_ins_impact" t-if="ins.impact_label"><i class="fa fa-bolt"/> <t t-esc="ins.impact_label"/></span>
+                                    <span class="o_ai_ins_conf"><t t-esc="ins.confidence"/>%</span>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </div>
+            </t>
+        </div>
+    </t>
+</templates>

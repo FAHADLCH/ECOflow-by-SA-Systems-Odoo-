@@ -9,17 +9,20 @@ Installable Odoo modules for the ECOFLOW environmental-operations ERP.
 
 ---
 
-## 1. Modules
+## 1. The app
 
-| Module | Phase | Provides |
-|--------|-------|----------|
-| `ecoflow_base` | 1 | Waste streams, materials, zones, bins, service sites |
-| `ecoflow_collection` | 1–2 | Services, service orders, proof-of-service events |
-| `ecoflow_routing` | 2 | Routes, stop sequencing (nearest-neighbour optimizer), dispatch |
-| `ecoflow_recycling` | 3 | Weigh tickets, MRF process batches, recovery, mass balance |
-| `ecoflow_compliance` | 4 | Waste codes, electronic manifests, permit register + expiry cron |
+ECOFLOW is a **single module** (`ecoflow`) that bundles every capability:
 
-Dependency order is handled automatically by Odoo via each manifest's `depends`.
+| Capability area | Provides |
+|-----------------|----------|
+| Base masters | Waste streams, materials, zones, bins, service sites |
+| Collection | Services, service orders, proof-of-service events |
+| Routing | Routes, stop sequencing (nearest-neighbour optimizer), dispatch |
+| Recycling | Weigh tickets, MRF process batches, recovery, mass balance |
+| Compliance | Waste codes, electronic manifests, permit register + expiry cron |
+| Cockpit & AI | Branded operations cockpit, KPIs and on-premise AI insights |
+
+Everything installs from one app — no separate dependencies to enable.
 
 ---
 
@@ -64,12 +67,12 @@ make up TAG=19
 ```bash
 cd "Waste Management System"
 
-# Initialize DB + install modules (demo data included)
+# Initialize DB + install the app (demo data included)
 ODOO_TAG=18 docker compose run --rm odoo odoo \
   --config=/etc/odoo/odoo.conf \
   -d ecoflow \
-  -i ecoflow_base,ecoflow_collection,ecoflow_routing,ecoflow_recycling,ecoflow_compliance \
-  --without-demo=False --stop-after-init
+  -i ecoflow \
+  --stop-after-init
 
 # Start the server
 ODOO_TAG=18 docker compose up -d
@@ -82,18 +85,18 @@ Swap `ODOO_TAG=18` for `ODOO_TAG=19` to test on Odoo 19.
 
 ## 4. Install into an existing Odoo (no Docker)
 
-1. Copy the module folders (`ecoflow_base/`, `ecoflow_collection/`, …) from the
-   repository root into your Odoo `addons_path`
-   (or add this repository directory to `addons_path` in your `odoo.conf`).
+1. Copy the `ecoflow/` module folder from the repository root into your Odoo
+   `addons_path` (or add this repository directory to `addons_path` in your
+   `odoo.conf`).
 2. Restart Odoo and **Update Apps List** (developer mode).
-3. Install **ECOFLOW Base** — dependencies pull in automatically. Then install
-   Collection, Routing, Recycling, and Compliance as needed.
+3. Install **ECOFLOW** — it contains every capability (base, collection, routing,
+   recycling, compliance, cockpit and AI) in one app.
 
 ```bash
-# Example: install everything in one shot
+# Example: install the app
 ./odoo-bin -c odoo.conf -d ecoflow \
-  -i ecoflow_base,ecoflow_collection,ecoflow_routing,ecoflow_recycling,ecoflow_compliance \
-  --without-demo=False --stop-after-init
+  -i ecoflow \
+  --stop-after-init
 ```
 
 ---

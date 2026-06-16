@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <menuitem id="menu_routing_routes" name="Routes"
-              parent="ecoflow_base.menu_ecoflow_operations"
-              action="action_route" sequence="5"/>
-</odoo>
