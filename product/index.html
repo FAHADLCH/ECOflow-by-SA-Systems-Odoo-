@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ECOFLOW by SA Systems — AI-Powered Waste &amp; Recycling Platform for Odoo</title>
+<meta name="description" content="ECOFLOW is the AI-powered environmental operations platform by SA Systems — predictive collection, smart routing, recycling, compliance and region-aware analytics, native to Odoo 18 &amp; 19." />
+<style>
+  :root {
+    --red: #cc0000;
+    --red-600: #a30000;
+    --red-hi: #e8482c;
+    --charcoal: #161b1c;
+    --charcoal-2: #1e2629;
+    --ink: #14191b;
+    --slate: #5f6b72;
+    --slate-200: #e5e9ec;
+    --surface: #f5f6f7;
+    --amber: #d98300;
+    --green: #2f9e44;
+    --radius: 18px;
+    --maxw: 1140px;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --text-hero: clamp(2.6rem, 1.2rem + 5vw, 5rem);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: #fff;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Nav ---------- */
+  header.nav {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: saturate(180%) blur(14px);
+    background: rgba(255, 255, 255, 0.85);
+    border-bottom: 1px solid var(--slate-200);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .logo-chip { display: inline-flex; align-items: center; background: var(--charcoal); border-radius: 11px; padding: 7px 12px; }
+  .brand .logo-chip img { height: 30px; display: block; }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+  .nav-links a { color: var(--slate); font-weight: 600; font-size: 0.95rem; transition: color 0.2s var(--ease); }
+  .nav-links a:hover { color: var(--ink); }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 22px; border-radius: 12px; font-weight: 700; font-size: 0.95rem;
+    transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), background 0.2s var(--ease);
+    cursor: pointer; border: 0;
+  }
+  .btn-primary { background: linear-gradient(120deg, var(--red), var(--red-hi)); color: #fff; box-shadow: 0 8px 24px rgba(204, 0, 0, 0.28); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(204, 0, 0, 0.4); }
+  .btn-ghost { background: #fff; color: var(--ink); border: 1px solid var(--slate-200); }
+  .btn-ghost:hover { transform: translateY(-2px); border-color: var(--red); }
+  .btn-dark { background: var(--charcoal); color: #fff; }
+  .btn-dark:hover { transform: translateY(-2px); background: #000; }
+
+  /* ---------- Hero ---------- */
+  .hero { position: relative; overflow: hidden; padding: 92px 0 60px; }
+  .hero::before {
+    content: ""; position: absolute; inset: -40% 25% auto -20%; height: 720px;
+    background: radial-gradient(closest-side, rgba(204,0,0,0.16), transparent);
+    z-index: 0;
+  }
+  .hero::after {
+    content: ""; position: absolute; inset: -12% -22% auto 42%; height: 620px;
+    background: radial-gradient(closest-side, rgba(22,27,28,0.10), transparent);
+    z-index: 0;
+  }
+  .hero .wrap { position: relative; z-index: 1; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 7px 14px; border-radius: 999px; background: rgba(204,0,0,0.1);
+    color: var(--red-600); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.04em;
+    text-transform: uppercase; margin-bottom: 22px;
+  }
+  .eyebrow .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); box-shadow: 0 0 0 4px rgba(204,0,0,0.18); }
+  h1.hero-title {
+    font-size: var(--text-hero); line-height: 1.02; margin: 0 0 18px;
+    letter-spacing: -0.03em; font-weight: 800; max-width: 15ch;
+  }
+  h1.hero-title .grad { background: linear-gradient(120deg, var(--red), var(--red-hi)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero p.lead { font-size: clamp(1.05rem, 0.96rem + 0.5vw, 1.3rem); color: var(--slate); max-width: 60ch; margin: 0 0 32px; }
+  .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+  .hero-stats { display: flex; gap: 40px; margin-top: 52px; flex-wrap: wrap; }
+  .hero-stats .stat strong { display: block; font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; color: var(--charcoal); }
+  .hero-stats .stat span { color: var(--slate); font-size: 0.9rem; font-weight: 600; }
+
+  /* ---------- Section ---------- */
+  section { padding: 84px 0; }
+  .band { background: var(--surface); border-top: 1px solid var(--slate-200); border-bottom: 1px solid var(--slate-200); }
+  .section-head { max-width: 64ch; margin: 0 auto 52px; text-align: center; }
+  .section-head .kicker { color: var(--red-600); font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.82rem; }
+  .section-head h2 { font-size: clamp(1.9rem, 1.2rem + 2.2vw, 3rem); margin: 12px 0 14px; letter-spacing: -0.02em; }
+  .section-head p { color: var(--slate); font-size: 1.08rem; }
+
+  /* ---------- AI strip ---------- */
+  .ai-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 8px; }
+  .ai-pill { background: #fff; border: 1px solid var(--slate-200); border-radius: 14px; padding: 22px; transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease); }
+  .ai-pill:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(20,25,27,0.10); }
+  .ai-pill .ic { width: 42px; height: 42px; border-radius: 11px; display: grid; place-items: center; font-size: 20px; margin-bottom: 14px; color: #fff; background: linear-gradient(135deg, var(--charcoal-2), var(--charcoal)); }
+  .ai-pill h4 { margin: 0 0 6px; font-size: 1.05rem; }
+  .ai-pill p { margin: 0; color: var(--slate); font-size: 0.9rem; }
+  .ai-pill .badge-ai { display: inline-block; font-size: 0.66rem; font-weight: 800; letter-spacing: 0.05em; color: #fff; background: var(--red); border-radius: 6px; padding: 2px 7px; margin-bottom: 12px; }
+
+  /* ---------- Capability bento ---------- */
+  .bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; }
+  .card {
+    background: #fff; border: 1px solid var(--slate-200); border-radius: var(--radius);
+    padding: 28px; transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), border-color 0.25s var(--ease);
+    position: relative; overflow: hidden;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(20,25,27,0.1); border-color: transparent; }
+  .card .ic { width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; font-size: 22px; margin-bottom: 16px; color: #fff; background: linear-gradient(135deg, var(--red), var(--red-hi)); }
+  .card h3 { margin: 0 0 8px; font-size: 1.2rem; }
+  .card p { margin: 0; color: var(--slate); font-size: 0.96rem; }
+  .card.span-3 { grid-column: span 3; }
+  .card.span-2 { grid-column: span 2; }
+  .card.feature { background: linear-gradient(135deg, var(--charcoal), var(--charcoal-2)); color: #fff; }
+  .card.feature .ic { background: var(--red); }
+  .card.feature h3 { color: #fff; }
+  .card.feature p { color: #c3cace; }
+  .card .tag-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .card .tag { font-size: 0.78rem; font-weight: 700; padding: 5px 11px; border-radius: 999px; background: rgba(204,0,0,0.1); color: var(--red-600); }
+  .card.feature .tag { background: rgba(255,255,255,0.12); color: #e7eaec; }
+
+  /* ---------- Product preview ---------- */
+  .preview .shot { margin: 0; border-radius: 20px; padding: 14px; background: linear-gradient(120deg, rgba(204,0,0,0.10), rgba(22,27,28,0.10)); border: 1px solid var(--slate-200); box-shadow: 0 30px 70px rgba(20,25,27,0.16); }
+  .preview .shot img { display: block; width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--slate-200); }
+  .preview .cap { text-align: center; color: var(--slate); font-size: 0.9rem; margin-top: 14px; }
+
+  /* ---------- Workflow ---------- */
+  .steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+  .step { background: #fff; border: 1px solid var(--slate-200); border-radius: 14px; padding: 22px; position: relative; }
+  .step .num { width: 30px; height: 30px; border-radius: 9px; background: var(--charcoal); color: #fff; font-weight: 800; display: grid; place-items: center; margin-bottom: 12px; font-size: 0.85rem; }
+  .step h4 { margin: 0 0 6px; font-size: 1rem; }
+  .step p { margin: 0; color: var(--slate); font-size: 0.88rem; }
+
+  /* ---------- Outcomes ---------- */
+  .outcomes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .outcome { text-align: center; padding: 18px; }
+  .outcome strong { display: block; font-size: 2.6rem; font-weight: 800; letter-spacing: -0.03em; color: var(--red); }
+  .outcome span { color: var(--slate); font-weight: 600; font-size: 0.95rem; }
+
+  /* ---------- Pricing ---------- */
+  .pricing { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; align-items: stretch; }
+  .plan { background: #fff; border: 1px solid var(--slate-200); border-radius: var(--radius); padding: 30px; display: flex; flex-direction: column; }
+  .plan.popular { border-color: var(--red); box-shadow: 0 20px 48px rgba(204,0,0,0.14); position: relative; }
+  .plan.popular::before { content: "Most popular"; position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: var(--red); color: #fff; font-size: 0.72rem; font-weight: 800; padding: 5px 14px; border-radius: 999px; letter-spacing: 0.04em; }
+  .plan h3 { margin: 0 0 6px; font-size: 1.3rem; }
+  .plan .price { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.02em; margin: 8px 0; }
+  .plan .price span { font-size: 0.9rem; color: var(--slate); font-weight: 600; }
+  .plan ul { list-style: none; padding: 0; margin: 18px 0 26px; display: grid; gap: 10px; }
+  .plan li { display: flex; gap: 10px; color: var(--ink); font-size: 0.94rem; }
+  .plan li::before { content: "✓"; color: var(--red); font-weight: 800; }
+  .plan .btn { width: 100%; justify-content: center; margin-top: auto; }
+
+  /* ---------- CTA ---------- */
+  .cta-final { background: linear-gradient(135deg, var(--charcoal), var(--charcoal-2)); border-radius: 26px; padding: 64px 40px; text-align: center; color: #fff; position: relative; overflow: hidden; }
+  .cta-final::before { content: ""; position: absolute; inset: -50% 40% auto -10%; height: 480px; background: radial-gradient(closest-side, rgba(204,0,0,0.42), transparent); }
+  .cta-final > * { position: relative; z-index: 1; }
+  .cta-final h2 { font-size: clamp(1.9rem, 1.2rem + 2vw, 2.8rem); margin: 0 0 14px; letter-spacing: -0.02em; }
+  .cta-final p { color: #c3cace; max-width: 56ch; margin: 0 auto 28px; font-size: 1.08rem; }
+
+  /* ---------- Footer ---------- */
+  footer { padding: 56px 0 40px; border-top: 1px solid var(--slate-200); }
+  .foot-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+  .foot-brand { display: flex; align-items: center; gap: 12px; }
+  .foot-brand .logo-chip img { height: 30px; display: block; }
+  footer small { color: var(--slate); }
+  .foot-links { display: flex; gap: 24px; }
+  .foot-links a { color: var(--slate); font-weight: 600; font-size: 0.92rem; }
+  .foot-links a:hover { color: var(--ink); }
+
+  @media (max-width: 900px) {
+    .ai-strip, .bento, .steps, .outcomes, .pricing { grid-template-columns: 1fr 1fr; }
+    .card.span-3, .card.span-2 { grid-column: span 2; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 560px) {
+    .ai-strip, .bento, .steps, .outcomes, .pricing { grid-template-columns: 1fr; }
+    .card.span-3, .card.span-2 { grid-column: span 1; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <div class="brand"><span class="logo-chip"><img src="assets/sa_systems_logo.png" alt="SA Systems — ECOFLOW" /></span></div>
+    <nav class="nav-links">
+      <a href="#ai">AI</a>
+      <a href="#capabilities">Capabilities</a>
+      <a href="#workflow">How it works</a>
+      <a href="#pricing">Pricing</a>
+    </nav>
+    <a class="btn btn-primary" href="#contact">Request a demo</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow"><span class="dot"></span> AI-Powered · Odoo 18 &amp; 19 Native</span>
+    <h1 class="hero-title">Waste &amp; recycling operations, run by <span class="grad">intelligent automation</span></h1>
+    <p class="lead">ECOFLOW unifies collection, smart routing, weighbridge, recovery, compliance and billing — then layers an explainable AI engine on top that forecasts demand, predicts bin overflow and surfaces the next best action every morning.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#contact">Start free trial</a>
+      <a class="btn btn-ghost" href="#preview">See the AI cockpit</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><strong>7</strong><span>Integrated modules</span></div>
+      <div class="stat"><strong>−22%</strong><span>Missed-collection rate</span></div>
+      <div class="stat"><strong>7-day</strong><span>Demand forecast horizon</span></div>
+      <div class="stat"><strong>100%</strong><span>On-platform, private AI</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="preview" class="preview">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Live AI Command Center</div>
+      <h2>Your whole operation, predicted at a glance</h2>
+      <p>A graphical, real-time cockpit with demand forecasting, predictive bin fill, recovery mix and prioritised AI insights — built natively in Odoo with zero external dependencies.</p>
+    </div>
+    <figure class="shot">
+      <img src="assets/demo_ai_center.png" alt="ECOFLOW AI Command Center dashboard" />
+    </figure>
+    <p class="cap">ECOFLOW AI Command Center — forecast, anomalies and recommendations, refreshed every day.</p>
+  </div>
+</section>
+
+<section id="ai">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Intelligence layer</div>
+      <h2>Advanced AI that earns its keep</h2>
+      <p>Explainable, deterministic models that run entirely inside your database — no data leaves Odoo, no API keys, fully auditable.</p>
+    </div>
+    <div class="ai-strip">
+      <div class="ai-pill">
+        <span class="badge-ai">AI</span>
+        <div class="ic">📈</div>
+        <h4>Demand forecasting</h4>
+        <p>7-day order projections per zone &amp; stream with trend detection and confidence bands.</p>
+      </div>
+      <div class="ai-pill">
+        <span class="badge-ai">AI</span>
+        <div class="ic">🗑️</div>
+        <h4>Predictive bin fill</h4>
+        <p>Estimates days-to-full from fill rate and cadence, then auto-creates priority service orders.</p>
+      </div>
+      <div class="ai-pill">
+        <span class="badge-ai">AI</span>
+        <div class="ic">⚠️</div>
+        <h4>Anomaly detection</h4>
+        <p>Robust z-score spotting of missed-collection spikes and mass-balance drift before they escalate.</p>
+      </div>
+      <div class="ai-pill">
+        <span class="badge-ai">AI</span>
+        <div class="ic">💡</div>
+        <h4>Next-best-action insights</h4>
+        <p>A prioritised feed of recommendations with one-click drill-down to the records that matter.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="capabilities" class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">One platform</div>
+      <h2>Every part of the waste lifecycle</h2>
+      <p>Seven Odoo-native modules that share one data model — no integrations, no silos, no double entry.</p>
+    </div>
+    <div class="bento">
+      <div class="card feature span-3">
+        <div class="ic">🚛</div>
+        <h3>Collection &amp; service orders</h3>
+        <p>Flat, per-lift or weight-based billing, SLA tracking and field service events with photo, GPS and weight capture.</p>
+        <div class="tag-list"><span class="tag">Service orders</span><span class="tag">SLA</span><span class="tag">Field events</span></div>
+      </div>
+      <div class="card span-3">
+        <div class="ic">🗺️</div>
+        <h3>Smart routing</h3>
+        <p>Build, optimise and dispatch routes by zone with distance-aware stop sequencing and live status.</p>
+        <div class="tag-list"><span class="tag">Route optimisation</span><span class="tag">Dispatch</span></div>
+      </div>
+      <div class="card span-2">
+        <div class="ic">⚖️</div>
+        <h3>Weighbridge &amp; recovery</h3>
+        <p>Inbound/outbound weigh tickets, process batches and recovery outputs with mass-balance checks.</p>
+      </div>
+      <div class="card span-2">
+        <div class="ic">📋</div>
+        <h3>Compliance &amp; manifests</h3>
+        <p>Waste codes, permits with expiry alerts and chain-of-custody manifests, region-aware.</p>
+      </div>
+      <div class="card span-2">
+        <div class="ic">🌍</div>
+        <h3>Region-specific</h3>
+        <p>EU, UK, US, AU, GCC, India or global profiles — frameworks, units and terminology adapt automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="workflow">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">How it works</div>
+      <h2>From bin to billing in five steps</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="num">1</div><h4>Plan</h4><p>AI forecasts demand and flags bins likely to overflow.</p></div>
+      <div class="step"><div class="num">2</div><h4>Route</h4><p>Optimised routes are built and dispatched by zone.</p></div>
+      <div class="step"><div class="num">3</div><h4>Serve</h4><p>Crews log serviced, blocked or contaminated events in the field.</p></div>
+      <div class="step"><div class="num">4</div><h4>Recover</h4><p>Weighbridge and recovery capture diversion and mass balance.</p></div>
+      <div class="step"><div class="num">5</div><h4>Bill</h4><p>Usage flows straight into invoicing and compliance manifests.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="outcomes" class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Outcomes</div>
+      <h2>Measurable results from day one</h2>
+    </div>
+    <div class="outcomes">
+      <div class="outcome"><strong>−22%</strong><span>Missed collections</span></div>
+      <div class="outcome"><strong>+15%</strong><span>Route efficiency</span></div>
+      <div class="outcome"><strong>+10pt</strong><span>Diversion rate</span></div>
+      <div class="outcome"><strong>0</strong><span>Permit lapses</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Pricing</div>
+      <h2>Simple plans that scale with you</h2>
+      <p>Run on Odoo Community or Enterprise. Cancel anytime.</p>
+    </div>
+    <div class="pricing">
+      <div class="plan">
+        <h3>Starter</h3>
+        <div class="price">$0<span> / forever on Community</span></div>
+        <ul>
+          <li>All 7 operational modules</li>
+          <li>Operations cockpit</li>
+          <li>Region profiles</li>
+          <li>Community support</li>
+        </ul>
+        <a class="btn btn-ghost" href="#contact">Get started</a>
+      </div>
+      <div class="plan popular">
+        <h3>Growth</h3>
+        <div class="price">$29<span> / user / mo</span></div>
+        <ul>
+          <li>Everything in Starter</li>
+          <li>AI Command Center</li>
+          <li>Demand forecasting &amp; bin prediction</li>
+          <li>Daily AI insight pipeline</li>
+          <li>Priority support</li>
+        </ul>
+        <a class="btn btn-primary" href="#contact">Start free trial</a>
+      </div>
+      <div class="plan">
+        <h3>Enterprise</h3>
+        <div class="price">Custom</div>
+        <ul>
+          <li>Everything in Growth</li>
+          <li>Custom region &amp; regulatory packs</li>
+          <li>Onboarding &amp; data migration</li>
+          <li>SLA &amp; dedicated success manager</li>
+        </ul>
+        <a class="btn btn-dark" href="#contact">Talk to sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="cta-final">
+      <h2>Ready to run a smarter waste operation?</h2>
+      <p>See ECOFLOW's AI Command Center on your own data. Book a 20-minute demo with the SA Systems team.</p>
+      <a class="btn btn-primary" href="https://www.sasystems.solutions" target="_blank" rel="noopener">Request a demo</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-inner">
+    <div class="foot-brand">
+      <span class="logo-chip"><img src="assets/sa_systems_logo.png" alt="SA Systems" /></span>
+    </div>
+    <div class="foot-links">
+      <a href="#ai">AI</a>
+      <a href="#capabilities">Capabilities</a>
+      <a href="#pricing">Pricing</a>
+      <a href="https://www.sasystems.solutions" target="_blank" rel="noopener">sasystems.solutions</a>
+    </div>
+    <small>© <span id="yr"></span> SA Systems · ECOFLOW. Built for Odoo.</small>
+  </div>
+</footer>
+
+<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+</body>
+</html>

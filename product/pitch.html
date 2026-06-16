@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ECOFLOW by SA Systems — Investor & Sales Pitch Deck</title>
+<style>
+  :root{
+    --red:#cc0000; --red-600:#a30000; --red-hi:#e8482c;
+    --charcoal:#13181a; --charcoal-2:#1c2427; --charcoal-3:#0c0f10;
+    --ink:#11161a; --slate:#aab2b8; --slate-2:#6c757c;
+    --surface:#f5f6f7; --card:#ffffff; --line:rgba(255,255,255,.10);
+    --maxw:1180px;
+    --font:"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--font); color:#eef1f2; background:var(--charcoal-3);
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  .deck{scroll-snap-type:y mandatory; height:100vh; overflow-y:scroll; scroll-behavior:smooth}
+  .slide{
+    min-height:100vh; scroll-snap-align:start; position:relative;
+    display:flex; align-items:center; justify-content:center;
+    padding:84px 40px 72px; overflow:hidden;
+  }
+  .wrap{width:100%; max-width:var(--maxw); margin:0 auto; position:relative; z-index:2}
+  /* backgrounds */
+  .bg-dark{background:radial-gradient(1200px 700px at 78% -10%, rgba(204,0,0,.30), transparent 60%),
+            linear-gradient(160deg,var(--charcoal-2) 0%,var(--charcoal) 55%,var(--charcoal-3) 100%);}
+  .bg-darker{background:radial-gradient(900px 600px at 12% 110%, rgba(232,72,44,.22), transparent 60%),
+             linear-gradient(160deg,var(--charcoal) 0%,var(--charcoal-3) 100%);}
+  .bg-light{background:var(--surface); color:var(--ink)}
+  .bg-red{background:radial-gradient(900px 600px at 85% 120%, rgba(0,0,0,.45), transparent 55%),
+          linear-gradient(150deg,var(--red-hi) 0%,var(--red) 55%,var(--red-600) 120%); color:#fff}
+  .grain:after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.5;
+    background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.025) 0 2px,transparent 2px 9px)}
+  /* shared atoms */
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:12px;font-weight:800;
+    letter-spacing:.14em;text-transform:uppercase;color:#fff;
+    background:var(--red);padding:7px 13px;border-radius:999px}
+  .eyebrow.ghost{background:transparent;border:1px solid rgba(255,255,255,.28);color:#fff}
+  .bg-light .eyebrow.ghost{border-color:rgba(0,0,0,.16);color:var(--red)}
+  h1{font-size:clamp(2.6rem,5.2vw,5rem);line-height:1.02;font-weight:900;letter-spacing:-.025em}
+  h2{font-size:clamp(2rem,3.6vw,3.2rem);line-height:1.06;font-weight:900;letter-spacing:-.02em}
+  h3{font-size:1.18rem;font-weight:800}
+  .lead{font-size:clamp(1.05rem,1.6vw,1.4rem);line-height:1.55;color:var(--slate)}
+  .bg-light .lead{color:var(--slate-2)}
+  .bg-red .lead{color:rgba(255,255,255,.92)}
+  .accent{color:var(--red-hi)}
+  .bg-light .accent{color:var(--red)}
+  .muted{color:var(--slate);font-size:.95rem}
+  .pill{display:inline-block;background:rgba(255,255,255,.08);border:1px solid var(--line);
+    color:#e9edee;font-size:.82rem;font-weight:700;padding:7px 13px;border-radius:999px;margin:0 8px 8px 0}
+  .bg-light .pill{background:#fff;border-color:#e6e8ea;color:var(--ink)}
+  /* logo lockup */
+  .brand{display:flex;align-items:center;gap:13px}
+  .sa-tile{width:46px;height:46px;border-radius:11px;background:linear-gradient(160deg,var(--red-hi),var(--red));
+    display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:22px;
+    box-shadow:0 8px 22px rgba(204,0,0,.4)}
+  .brand .nm{font-weight:900;font-size:1.05rem;letter-spacing:.02em}
+  .brand .sb{font-size:.66rem;letter-spacing:.22em;color:var(--slate);text-transform:uppercase}
+  .bg-light .brand .sb{color:var(--slate-2)}
+  /* layout helpers */
+  .grid{display:grid;gap:20px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:920px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:18px;padding:24px}
+  .bg-light .card{background:#fff;border-color:#e7e9eb;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+  .card .ic{font-size:26px;margin-bottom:12px}
+  .card h3{margin-bottom:6px}
+  .card p{color:var(--slate);font-size:.95rem;line-height:1.55}
+  .bg-light .card p{color:var(--slate-2)}
+  /* stat */
+  .stat .n{font-size:clamp(2.2rem,4vw,3.4rem);font-weight:900;color:var(--red-hi);line-height:1}
+  .bg-red .stat .n{color:#fff}
+  .stat .l{color:var(--slate);font-size:.92rem;margin-top:6px}
+  .bg-red .stat .l{color:rgba(255,255,255,.85)}
+  /* slide number + footer */
+  .snum{position:absolute;top:30px;right:38px;font-size:.78rem;font-weight:800;color:var(--slate);z-index:3;letter-spacing:.1em}
+  .bg-light .snum,.bg-red .snum{color:rgba(255,255,255,.0)}
+  .bg-light .snum{color:var(--slate-2)}
+  .bg-red .snum{color:rgba(255,255,255,.7)}
+  .foot{position:absolute;bottom:24px;left:40px;font-size:.74rem;color:var(--slate);letter-spacing:.08em;z-index:3}
+  .bg-light .foot{color:var(--slate-2)} .bg-red .foot{color:rgba(255,255,255,.8)}
+  /* progress + nav */
+  .progress{position:fixed;top:0;left:0;height:4px;width:0;background:linear-gradient(90deg,var(--red),var(--red-hi));z-index:50;transition:width .2s}
+  .dots{position:fixed;right:18px;top:50%;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column;gap:11px}
+  .dots a{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.28);transition:all .2s}
+  .dots a.active{background:var(--red);transform:scale(1.35)}
+  .dots a:hover{background:var(--red-hi)}
+  .hint{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:50;font-size:.74rem;
+    color:rgba(255,255,255,.55);letter-spacing:.1em;display:flex;align-items:center;gap:8px;
+    background:rgba(0,0,0,.4);padding:7px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.1)}
+  .kbd{border:1px solid rgba(255,255,255,.3);border-radius:5px;padding:1px 7px;font-size:.72rem}
+  /* shot frame */
+  .shot{border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.55);background:#000}
+  .shot img{display:block;width:100%;height:auto}
+  .tagrow{display:flex;flex-wrap:wrap;gap:0;margin-top:18px}
+  .checkrow{display:flex;align-items:flex-start;gap:11px;margin-bottom:13px}
+  .checkrow .ck{flex:none;width:24px;height:24px;border-radius:7px;background:var(--red);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;margin-top:1px}
+  .checkrow b{font-size:1.02rem} .checkrow span{color:var(--slate);font-size:.95rem}
+  .bg-light .checkrow span{color:var(--slate-2)}
+  .price{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:18px;padding:26px}
+  .bg-light .price{background:#fff;border-color:#e7e9eb}
+  .price.hot{border-color:var(--red);box-shadow:0 18px 50px rgba(204,0,0,.22);position:relative}
+  .price .amt{font-size:2.6rem;font-weight:900;margin:6px 0}
+  .price .amt small{font-size:1rem;color:var(--slate);font-weight:700}
+  .badge-hot{position:absolute;top:-12px;left:26px;background:var(--red);color:#fff;font-size:.68rem;
+    font-weight:800;letter-spacing:.1em;padding:5px 11px;border-radius:999px;text-transform:uppercase}
+  ul.clean{list-style:none} ul.clean li{padding:7px 0;color:var(--slate);font-size:.92rem;border-bottom:1px solid var(--line)}
+  .bg-light ul.clean li{color:var(--slate-2);border-color:#eceef0}
+  ul.clean li:before{content:"✓";color:var(--red-hi);font-weight:900;margin-right:9px}
+  .bg-light ul.clean li:before{color:var(--red)}
+  .cta{display:inline-flex;align-items:center;gap:10px;background:#fff;color:var(--red-600);
+    font-weight:900;font-size:1.02rem;padding:15px 28px;border-radius:999px;text-decoration:none;
+    box-shadow:0 14px 36px rgba(0,0,0,.3)}
+  .cta.dark{background:var(--red);color:#fff}
+  @media print{.deck{height:auto;overflow:visible}.slide{page-break-after:always;min-height:auto}.dots,.hint,.progress{display:none}}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="dots" id="dots"></div>
+<div class="hint"><span class="kbd">↓</span> scroll &nbsp;·&nbsp; <span class="kbd">→</span> next slide</div>
+
+<div class="deck" id="deck">
+
+  <!-- 1 — COVER -->
+  <section class="slide bg-dark grain" id="s1">
+    <div class="snum">01</div>
+    <div class="wrap">
+      <div class="brand" style="margin-bottom:34px">
+        <div class="sa-tile">sa</div>
+        <div><div class="nm">SA Systems</div><div class="sb">Environmental Operations</div></div>
+      </div>
+      <div class="eyebrow" style="margin-bottom:22px">Investor &amp; Sales Pitch · Odoo 18 / 19</div>
+      <h1>ECOFLOW.<br/>Waste &amp; recycling operations,<br/><span class="accent">run by intelligent automation.</span></h1>
+      <p class="lead" style="margin-top:26px;max-width:760px">
+        A complete, AI-native ERP for collection, routing, recovery and compliance —
+        beautifully branded, privacy-first, and ready to sell on the Odoo App Store today.
+      </p>
+      <div style="margin-top:30px" class="tagrow">
+        <span class="pill">7 modules</span>
+        <span class="pill">On-premise AI</span>
+        <span class="pill">Region-aware</span>
+        <span class="pill">$5 / module</span>
+        <span class="pill">Native to Odoo</span>
+      </div>
+    </div>
+    <div class="foot">sasystems.solutions · ECOFLOW Suite</div>
+  </section>
+
+  <!-- 2 — PROBLEM -->
+  <section class="slide bg-light" id="s2">
+    <div class="snum">02</div>
+    <div class="wrap">
+      <div class="eyebrow ghost" style="margin-bottom:18px">The problem</div>
+      <h2>Waste operators run on spreadsheets,<br/>radios and <span class="accent">guesswork.</span></h2>
+      <p class="lead" style="margin:20px 0 36px;max-width:820px">
+        The industry moves millions of tonnes a year, yet most operators still plan routes by hand,
+        discover full bins only after a complaint, and assemble compliance paperwork retroactively.
+      </p>
+      <div class="grid g3">
+        <div class="card"><div class="ic">🗺️</div><h3>Wasted miles</h3><p>Manual routing burns fuel, labour and vehicle hours on stops that didn’t need a visit.</p></div>
+        <div class="card"><div class="ic">🗑️</div><h3>Overflow &amp; complaints</h3><p>No fill-level foresight means missed pickups, overflowing bins and SLA penalties.</p></div>
+        <div class="card"><div class="ic">📄</div><h3>Audit anxiety</h3><p>Manifests and permits tracked in spreadsheets create costly, last-minute compliance scrambles.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 — SOLUTION -->
+  <section class="slide bg-dark grain" id="s3">
+    <div class="snum">03</div>
+    <div class="wrap">
+      <div class="eyebrow" style="margin-bottom:18px">The solution</div>
+      <h2>One platform — from the bin<br/>to the <span class="accent">boardroom.</span></h2>
+      <p class="lead" style="margin:20px 0 34px;max-width:840px">
+        ECOFLOW unifies the entire operation in Odoo and layers explainable AI on top —
+        so the system tells your team what to do next, before problems happen.
+      </p>
+      <div class="grid g4">
+        <div class="card"><div class="ic">📋</div><h3>Capture</h3><p>Services, orders &amp; proof-of-service with RFID, geo &amp; photo.</p></div>
+        <div class="card"><div class="ic">🚛</div><h3>Optimise</h3><p>Auto-sequenced routes &amp; dispatch from live demand.</p></div>
+        <div class="card"><div class="ic">♻️</div><h3>Recover</h3><p>Weighbridge, MRF batches, diversion &amp; yield.</p></div>
+        <div class="card"><div class="ic">🔮</div><h3>Predict</h3><p>Forecasts, fill-level prediction &amp; next-best-action.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 — AI CAPABILITIES -->
+  <section class="slide bg-darker grain" id="s4">
+    <div class="snum">04</div>
+    <div class="wrap">
+      <div class="eyebrow" style="margin-bottom:18px">What makes it stand out</div>
+      <h2>An AI command center that<br/>thinks like a <span class="accent">dispatcher.</span></h2>
+      <div class="grid g2" style="margin-top:30px">
+        <div class="card"><div class="ic">🔮</div><h3>Demand forecasting</h3><p>Per-zone, per-stream volume forecasts using trend + weekday seasonality — staff and trucks planned with confidence.</p></div>
+        <div class="card"><div class="ic">🗑️</div><h3>Predictive bin fill</h3><p>Projects fill-levels and flags “collect now” before overflow, turning reactive runs into planned ones.</p></div>
+        <div class="card"><div class="ic">🚨</div><h3>Anomaly detection</h3><p>Robust statistics catch contamination, mass-balance drift and missed-pickup spikes automatically.</p></div>
+        <div class="card"><div class="ic">🧭</div><h3>Next-best-action</h3><p>Plain-language insights ranked by impact, each with one-click drill-down into the exact record.</p></div>
+      </div>
+      <p class="muted" style="margin-top:22px">🔒 100% on-premise · deterministic &amp; explainable · nothing leaves your server — works on Odoo Online too.</p>
+    </div>
+  </section>
+
+  <!-- 5 — PRODUCT SHOT (AI center) -->
+  <section class="slide bg-dark grain" id="s5">
+    <div class="snum">05</div>
+    <div class="wrap">
+      <div class="grid g2" style="align-items:center;gap:38px">
+        <div>
+          <div class="eyebrow" style="margin-bottom:16px">See it live</div>
+          <h2>The AI Command Center</h2>
+          <p class="lead" style="margin:16px 0 22px">
+            A single, branded screen that turns raw operations into decisions —
+            forecasts, KPIs, recovery mix and a live insight feed.
+          </p>
+          <div class="checkrow"><div class="ck">✓</div><div><b>Live forecast chart</b><br/><span>Serviced vs missed vs projected demand.</span></div></div>
+          <div class="checkrow"><div class="ck">✓</div><div><b>Status &amp; KPI tiles</b><br/><span>Orders, routes, diversion, permit expiries.</span></div></div>
+          <div class="checkrow"><div class="ck">✓</div><div><b>Ranked AI insights</b><br/><span>Impact-scored actions with one-click drill-down.</span></div></div>
+        </div>
+        <div class="shot"><img src="assets/demo_ai_center.png" alt="ECOFLOW AI Command Center"/></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 — PRODUCT SHOT (cockpit) -->
+  <section class="slide bg-light" id="s6">
+    <div class="snum">06</div>
+    <div class="wrap">
+      <div class="grid g2" style="align-items:center;gap:38px">
+        <div class="shot"><img src="assets/demo_cockpit.png" alt="ECOFLOW Operations Cockpit"/></div>
+        <div>
+          <div class="eyebrow ghost" style="margin-bottom:16px">Operations cockpit</div>
+          <h2>Beautiful by default.</h2>
+          <p class="lead" style="margin:16px 0 22px">
+            A polished SA Systems cockpit gives supervisors the whole operation at a glance —
+            no training deck required.
+          </p>
+          <div class="tagrow">
+            <span class="pill">Live KPI tiles</span>
+            <span class="pill">Graph &amp; pivot</span>
+            <span class="pill">Charcoal &amp; red identity</span>
+            <span class="pill">One-screen view</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 — SUITE / ARCHITECTURE -->
+  <section class="slide bg-darker grain" id="s7">
+    <div class="snum">07</div>
+    <div class="wrap">
+      <div class="eyebrow" style="margin-bottom:18px">The suite</div>
+      <h2>Seven modules. <span class="accent">One backbone.</span></h2>
+      <p class="lead" style="margin:18px 0 30px;max-width:820px">Modular by design — start with Base and grow into the full intelligent platform.</p>
+      <div class="grid g4" style="gap:16px">
+        <div class="card"><h3>🗂️ Base</h3><p>Streams, materials, zones, bins &amp; sites.</p></div>
+        <div class="card"><h3>📋 Collection</h3><p>Services, orders &amp; proof-of-service.</p></div>
+        <div class="card"><h3>🗺️ Routing</h3><p>Routes, sequencing &amp; dispatch.</p></div>
+        <div class="card"><h3>♻️ Recycling</h3><p>Weighbridge, MRF &amp; diversion.</p></div>
+        <div class="card"><h3>🛡️ Compliance</h3><p>Waste codes, manifests &amp; permits.</p></div>
+        <div class="card"><h3>📊 Dashboard</h3><p>Cockpit, KPIs &amp; branding.</p></div>
+        <div class="card" style="border-color:var(--red)"><h3 class="accent">🧠 AI Intelligence</h3><p>Forecasting, prediction &amp; insights.</p></div>
+        <div class="card" style="background:linear-gradient(160deg,rgba(204,0,0,.18),transparent)"><h3>🌍 Region-aware</h3><p>EU · UK · US · AU · GCC · IN · Global.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 — OUTCOMES / ROI -->
+  <section class="slide bg-red grain" id="s8">
+    <div class="snum">08</div>
+    <div class="wrap">
+      <div class="eyebrow ghost" style="margin-bottom:18px;border-color:rgba(255,255,255,.5)">The payoff</div>
+      <h2 style="color:#fff">Measurable impact, fast.</h2>
+      <div class="grid g4" style="margin-top:34px">
+        <div class="stat"><div class="n">−22%</div><div class="l">fewer wasted miles</div></div>
+        <div class="stat"><div class="n">+15%</div><div class="l">diversion uplift</div></div>
+        <div class="stat"><div class="n">+10pt</div><div class="l">on-time collection</div></div>
+        <div class="stat"><div class="n">0</div><div class="l">data leaves your server</div></div>
+      </div>
+      <p class="lead" style="margin-top:34px;max-width:760px">
+        Lower fuel and labour, fewer SLA penalties, cleaner audits — ECOFLOW pays for itself
+        in the first optimised routes.
+      </p>
+    </div>
+  </section>
+
+  <!-- 9 — GO TO MARKET / CUSTOMER GRABBING -->
+  <section class="slide bg-dark grain" id="s9">
+    <div class="snum">09</div>
+    <div class="wrap">
+      <div class="eyebrow" style="margin-bottom:18px">Go-to-market</div>
+      <h2>How we win <span class="accent">customers.</span></h2>
+      <div class="grid g3" style="margin-top:28px">
+        <div class="card"><div class="ic">🛒</div><h3>Frictionless trial</h3><p>Listed on the Odoo App Store at just <b>$5/module</b> with demo data — install, click, and see value in minutes.</p></div>
+        <div class="card"><div class="ic">🧩</div><h3>Land &amp; expand</h3><p>Start with one module; the suite cross-sells itself as operations grow. Each install showcases the next.</p></div>
+        <div class="card"><div class="ic">🔒</div><h3>Privacy as a pitch</h3><p>On-premise AI is a closing argument for regulated, public-sector and enterprise buyers.</p></div>
+        <div class="card"><div class="ic">🌍</div><h3>Region packs</h3><p>Built-in regulatory frameworks &amp; units make global expansion a config toggle, not a rebuild.</p></div>
+        <div class="card"><div class="ic">🎨</div><h3>Demo-ready polish</h3><p>The branded cockpit &amp; AI center make every sales call a live, screenshot-worthy demo.</p></div>
+        <div class="card"><div class="ic">🤝</div><h3>Partner channel</h3><p>Odoo’s implementer network resells a vertical they previously had to build by hand.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 — PRICING -->
+  <section class="slide bg-light" id="s10">
+    <div class="snum">10</div>
+    <div class="wrap">
+      <div class="eyebrow ghost" style="margin-bottom:18px">Pricing</div>
+      <h2>Priced to <span class="accent">spread.</span></h2>
+      <p class="lead" style="margin:16px 0 30px">Every module is just <b>$5</b> on the Odoo App Store — a deliberate low-friction price to drive volume and the land-and-expand motion.</p>
+      <div class="grid g3">
+        <div class="price"><h3>Single module</h3><div class="amt">$5 <small>/ module</small></div>
+          <ul class="clean"><li>Pick exactly what you need</li><li>Demo data included</li><li>Odoo 18 &amp; 19</li><li>Lifetime updates</li></ul>
+        </div>
+        <div class="price hot"><div class="badge-hot">Best value</div><h3>Full suite</h3><div class="amt">$35 <small>/ 7 modules</small></div>
+          <ul class="clean"><li>The complete platform</li><li>AI Intelligence included</li><li>Branded cockpit</li><li>Region-aware everywhere</li></ul>
+        </div>
+        <div class="price"><h3>Enterprise</h3><div class="amt">Custom</div>
+          <ul class="clean"><li>Implementation &amp; onboarding</li><li>Custom region packs</li><li>Priority support SLA</li><li>Tailored integrations</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 — CLOSE -->
+  <section class="slide bg-darker grain" id="s11">
+    <div class="snum">11</div>
+    <div class="wrap" style="text-align:center">
+      <div class="brand" style="justify-content:center;margin-bottom:26px">
+        <div class="sa-tile">sa</div>
+        <div style="text-align:left"><div class="nm">SA Systems</div><div class="sb">Environmental Operations</div></div>
+      </div>
+      <h1>Let’s make waste<br/><span class="accent">intelligent.</span></h1>
+      <p class="lead" style="margin:24px auto 32px;max-width:640px">
+        ECOFLOW is built, branded and App-Store ready. Install the suite, run the live demo,
+        and turn operations into automation.
+      </p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+        <a class="cta dark" href="https://www.sasystems.solutions">Visit sasystems.solutions →</a>
+        <a class="cta" href="mailto:support@sasystems.solutions">support@sasystems.solutions</a>
+      </div>
+      <p class="muted" style="margin-top:30px">Compatible with Odoo 18.0 &amp; 19.0 · 7 modules · On-premise AI · © 2025 SA Systems</p>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  const deck=document.getElementById('deck');
+  const slides=[...document.querySelectorAll('.slide')];
+  const dots=document.getElementById('dots');
+  const prog=document.getElementById('progress');
+  slides.forEach((s,i)=>{const a=document.createElement('a');a.href='#'+s.id;
+    a.addEventListener('click',e=>{e.preventDefault();s.scrollIntoView()});dots.appendChild(a);});
+  const dotEls=[...dots.children];
+  function onScroll(){
+    const top=deck.scrollTop, h=deck.clientHeight;
+    const idx=Math.round(top/h);
+    dotEls.forEach((d,i)=>d.classList.toggle('active',i===idx));
+    const max=deck.scrollHeight-h;
+    prog.style.width=(max>0?(top/max*100):0)+'%';
+  }
+  deck.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+  // arrow / space navigation between slides
+  window.addEventListener('keydown',e=>{
+    const h=deck.clientHeight; const idx=Math.round(deck.scrollTop/h);
+    if(['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)){e.preventDefault();
+      if(idx<slides.length-1)slides[idx+1].scrollIntoView();}
+    if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();
+      if(idx>0)slides[idx-1].scrollIntoView();}
+    if(e.key==='Home'){e.preventDefault();slides[0].scrollIntoView();}
+    if(e.key==='End'){e.preventDefault();slides[slides.length-1].scrollIntoView();}
+  });
+</script>
+</body>
+</html>

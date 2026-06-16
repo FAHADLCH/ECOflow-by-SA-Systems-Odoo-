@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_ai_forecast_graph" model="ir.ui.view">
+        <field name="name">ecoflow.ai.forecast.graph</field>
+        <field name="model">ecoflow.ai.forecast</field>
+        <field name="arch" type="xml">
+            <graph string="Demand Forecast" type="line" sample="1">
+                <field name="forecast_date" interval="day"/>
+                <field name="zone_id"/>
+                <field name="predicted_orders" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_ai_forecast_pivot" model="ir.ui.view">
+        <field name="name">ecoflow.ai.forecast.pivot</field>
+        <field name="model">ecoflow.ai.forecast</field>
+        <field name="arch" type="xml">
+            <pivot string="Demand Forecast" sample="1">
+                <field name="zone_id" type="row"/>
+                <field name="waste_stream_id" type="row"/>
+                <field name="forecast_date" interval="day" type="col"/>
+                <field name="predicted_orders" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_ai_forecast_list" model="ir.ui.view">
+        <field name="name">ecoflow.ai.forecast.list</field>
+        <field name="model">ecoflow.ai.forecast</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="forecast_date"/>
+                <field name="zone_id"/>
+                <field name="waste_stream_id"/>
+                <field name="predicted_orders"/>
+                <field name="lower_bound"/>
+                <field name="upper_bound"/>
+                <field name="trend" widget="badge"
+                       decoration-success="trend=='rising'"
+                       decoration-danger="trend=='falling'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_ai_forecast" model="ir.actions.act_window">
+        <field name="name">AI Demand Forecast</field>
+        <field name="res_model">ecoflow.ai.forecast</field>
+        <field name="view_mode">graph,pivot,list</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No forecast yet</p>
+            <p>Use <b>Generate Forecast</b> to project collection demand by zone
+               and waste stream for the week ahead.</p>
+        </field>
+    </record>
+</odoo>

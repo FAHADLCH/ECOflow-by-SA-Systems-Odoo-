@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_bin_prediction_list" model="ir.ui.view">
+        <field name="name">ecoflow.bin.prediction.list</field>
+        <field name="model">ecoflow.bin.prediction</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="recommendation=='collect_now'"
+                  decoration-warning="recommendation=='schedule_soon'"
+                  decoration-muted="recommendation=='defer'">
+                <field name="bin_id"/>
+                <field name="site_id"/>
+                <field name="zone_id"/>
+                <field name="waste_stream_id"/>
+                <field name="current_fill" widget="progressbar"/>
+                <field name="daily_gain"/>
+                <field name="predicted_fill" widget="progressbar"/>
+                <field name="days_to_full"/>
+                <field name="recommendation" widget="badge"
+                       decoration-danger="recommendation=='collect_now'"
+                       decoration-warning="recommendation=='schedule_soon'"/>
+                <field name="priority_score"/>
+                <button name="action_create_service_order" type="object"
+                        string="Create Order" icon="fa-plus-circle"
+                        invisible="recommendation not in ('collect_now','schedule_soon')"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_bin_prediction_graph" model="ir.ui.view">
+        <field name="name">ecoflow.bin.prediction.graph</field>
+        <field name="model">ecoflow.bin.prediction</field>
+        <field name="arch" type="xml">
+            <graph string="Predicted Fill" type="bar" sample="1">
+                <field name="zone_id"/>
+                <field name="predicted_fill" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_bin_prediction_pivot" model="ir.ui.view">
+        <field name="name">ecoflow.bin.prediction.pivot</field>
+        <field name="model">ecoflow.bin.prediction</field>
+        <field name="arch" type="xml">
+            <pivot string="Predicted Fill" sample="1">
+                <field name="zone_id" type="row"/>
+                <field name="recommendation" type="col"/>
+                <field name="priority_score" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_bin_prediction" model="ir.actions.act_window">
+        <field name="name">Predictive Bin Fill</field>
+        <field name="res_model">ecoflow.bin.prediction</field>
+        <field name="view_mode">list,graph,pivot</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No predictions yet</p>
+            <p>Use <b>Predict Fill Levels</b> to forecast which bins will fill
+               first and turn them into priority collections in one click.</p>
+        </field>
+    </record>
+</odoo>

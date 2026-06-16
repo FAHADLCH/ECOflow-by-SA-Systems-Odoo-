@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_service_user,service.user,model_ecoflow_service,ecoflow_base.group_ecoflow_user,1,0,0,0
+access_service_manager,service.manager,model_ecoflow_service,ecoflow_base.group_ecoflow_manager,1,1,1,1
+access_service_order_user,service.order.user,model_ecoflow_service_order,ecoflow_base.group_ecoflow_user,1,1,1,0
+access_service_order_dispatcher,service.order.dispatcher,model_ecoflow_service_order,ecoflow_base.group_ecoflow_dispatcher,1,1,1,1
+access_service_order_manager,service.order.manager,model_ecoflow_service_order,ecoflow_base.group_ecoflow_manager,1,1,1,1
+access_service_event_user,service.event.user,model_ecoflow_service_event,ecoflow_base.group_ecoflow_user,1,1,1,0
+access_service_event_manager,service.event.manager,model_ecoflow_service_event,ecoflow_base.group_ecoflow_manager,1,1,1,1

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Default global configuration parameters -->
+    <record id="param_region" model="ir.config_parameter">
+        <field name="key">ecoflow.region</field>
+        <field name="value">global</field>
+    </record>
+    <record id="param_unit_system" model="ir.config_parameter">
+        <field name="key">ecoflow.unit_system</field>
+        <field name="value">metric</field>
+    </record>
+    <record id="param_ai_enabled" model="ir.config_parameter">
+        <field name="key">ecoflow.ai_enabled</field>
+        <field name="value">True</field>
+    </record>
+    <record id="param_forecast_horizon" model="ir.config_parameter">
+        <field name="key">ecoflow.forecast_horizon</field>
+        <field name="value">7</field>
+    </record>
+    <record id="param_bin_full_threshold" model="ir.config_parameter">
+        <field name="key">ecoflow.bin_full_threshold</field>
+        <field name="value">90.0</field>
+    </record>
+
+    <!-- Daily AI pipeline: forecasts -> predictions -> insights -->
+    <record id="cron_ai_pipeline" model="ir.cron">
+        <field name="name">ECOFLOW: Refresh AI Intelligence</field>
+        <field name="model_id" ref="model_ecoflow_ai_insight"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_generate()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

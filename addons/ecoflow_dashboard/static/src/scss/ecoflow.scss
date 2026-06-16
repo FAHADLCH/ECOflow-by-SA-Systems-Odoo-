@@ -1,0 +1,165 @@
+// =====================================================================
+// SA Systems — ECOFLOW backend theme
+// =====================================================================
+:root {
+    --sa-red: #cc0000;
+    --sa-red-600: #a30000;
+    --sa-red-500: #e8482c;
+    --sa-charcoal: #161b1c;
+    --sa-charcoal-2: #1e2629;
+    --sa-ink: #161b1c;
+    --sa-slate: #6b7681;
+    --sa-surface: #f5f6f7;
+    --sa-amber: #d98300;
+    --sa-green: #2f9e44;
+}
+
+// ---- Operations cockpit ---------------------------------------------
+.o_ecoflow_cockpit {
+    background: var(--sa-surface);
+    min-height: 100%;
+    padding: 0 0 2rem 0;
+
+    .o_ecoflow_hero {
+        background: linear-gradient(120deg, var(--sa-charcoal) 0%, var(--sa-charcoal-2) 55%, var(--sa-red-600) 130%);
+        color: #fff;
+        padding: 1.75rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
+
+        .o_ecoflow_brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+
+            img {
+                height: 52px;
+                width: auto;
+                filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25));
+                background: rgba(255, 255, 255, 0.92);
+                border-radius: 12px;
+                padding: 6px 10px;
+            }
+        }
+
+        .o_ecoflow_title {
+            h1 {
+                margin: 0;
+                font-size: 1.55rem;
+                font-weight: 700;
+                letter-spacing: -0.01em;
+            }
+            p {
+                margin: 0.15rem 0 0;
+                opacity: 0.9;
+                font-size: 0.9rem;
+            }
+        }
+
+        .o_ecoflow_refresh {
+            background: rgba(255, 255, 255, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            color: #fff;
+            border-radius: 10px;
+            padding: 0.5rem 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.15s ease, transform 0.15s ease;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.3);
+                transform: translateY(-1px);
+            }
+        }
+    }
+
+    .o_ecoflow_grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 1rem;
+        padding: 1.5rem 2rem 0;
+    }
+
+    .o_ecoflow_section_title {
+        padding: 1.5rem 2rem 0.25rem;
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--sa-slate);
+    }
+
+    .o_ecoflow_kpi {
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 1.15rem 1.25rem;
+        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.1);
+        }
+
+        &::before {
+            content: "";
+            position: absolute;
+            inset: 0 auto 0 0;
+            width: 4px;
+            background: var(--sa-red);
+        }
+
+        &.is-blue::before { background: var(--sa-charcoal); }
+        &.is-amber::before { background: var(--sa-amber); }
+        &.is-red::before { background: var(--sa-red-500); }
+        &.is-green::before { background: var(--sa-green); }
+
+        .o_ecoflow_kpi_label {
+            font-size: 0.78rem;
+            color: var(--sa-slate);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .o_ecoflow_kpi_value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--sa-ink);
+            line-height: 1.1;
+            margin-top: 0.3rem;
+        }
+        .o_ecoflow_kpi_sub {
+            font-size: 0.8rem;
+            color: var(--sa-slate);
+            margin-top: 0.2rem;
+        }
+        .o_ecoflow_kpi_bar {
+            margin-top: 0.6rem;
+            height: 6px;
+            border-radius: 999px;
+            background: #e2e8f0;
+            overflow: hidden;
+
+            span {
+                display: block;
+                height: 100%;
+                border-radius: 999px;
+                background: var(--sa-red);
+            }
+        }
+    }
+}
+
+// ---- App icon accent in the apps menu (subtle) -----------------------
+.o_ecoflow_kpi .o_ecoflow_kpi_value small {
+    font-size: 0.9rem;
+    color: var(--sa-slate);
+    font-weight: 600;
+}

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_weigh_ticket_list" model="ir.ui.view">
+        <field name="name">ecoflow.weigh.ticket.list</field>
+        <field name="model">ecoflow.weigh.ticket</field>
+        <field name="arch" type="xml">
+            <list string="Weigh Tickets" decoration-success="state == 'posted'">
+                <field name="name"/>
+                <field name="timestamp"/>
+                <field name="direction"/>
+                <field name="waste_stream_id"/>
+                <field name="facility_id"/>
+                <field name="vehicle_id"/>
+                <field name="net_weight" sum="Total Net"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_weigh_ticket_form" model="ir.ui.view">
+        <field name="name">ecoflow.weigh.ticket.form</field>
+        <field name="model">ecoflow.weigh.ticket</field>
+        <field name="arch" type="xml">
+            <form string="Weigh Ticket">
+                <header>
+                    <button name="action_post" string="Post" type="object"
+                            class="btn-primary" invisible="state == 'posted'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="direction"/>
+                            <field name="source"/>
+                            <field name="event_id"/>
+                            <field name="waste_stream_id"/>
+                        </group>
+                        <group>
+                            <field name="facility_id"/>
+                            <field name="vehicle_id"/>
+                            <field name="gross_weight"/>
+                            <field name="tare_weight"/>
+                            <field name="net_weight"/>
+                            <field name="timestamp"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_weigh_ticket" model="ir.actions.act_window">
+        <field name="name">Weigh Tickets</field>
+        <field name="res_model">ecoflow.weigh.ticket</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

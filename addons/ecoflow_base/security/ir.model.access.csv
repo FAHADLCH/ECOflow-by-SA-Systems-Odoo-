@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_waste_stream_user,waste.stream.user,model_ecoflow_waste_stream,group_ecoflow_user,1,0,0,0
+access_waste_stream_manager,waste.stream.manager,model_ecoflow_waste_stream,group_ecoflow_manager,1,1,1,1
+access_material_user,material.user,model_ecoflow_material,group_ecoflow_user,1,0,0,0
+access_material_manager,material.manager,model_ecoflow_material,group_ecoflow_manager,1,1,1,1
+access_zone_user,zone.user,model_ecoflow_zone,group_ecoflow_user,1,0,0,0
+access_zone_manager,zone.manager,model_ecoflow_zone,group_ecoflow_manager,1,1,1,1
+access_bin_user,bin.user,model_ecoflow_bin,group_ecoflow_user,1,1,1,0
+access_bin_manager,bin.manager,model_ecoflow_bin,group_ecoflow_manager,1,1,1,1

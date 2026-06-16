@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_process_batch_list" model="ir.ui.view">
+        <field name="name">ecoflow.process.batch.list</field>
+        <field name="model">ecoflow.process.batch</field>
+        <field name="arch" type="xml">
+            <list string="Process Batches" decoration-success="state == 'done'"
+                  decoration-danger="not balance_ok">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="waste_stream_id"/>
+                <field name="input_kg" sum="Input"/>
+                <field name="recovered_kg" sum="Recovered"/>
+                <field name="residual_kg" sum="Residual"/>
+                <field name="recovery_rate" widget="percentage"/>
+                <field name="balance_ok"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_process_batch_form" model="ir.ui.view">
+        <field name="name">ecoflow.process.batch.form</field>
+        <field name="model">ecoflow.process.batch</field>
+        <field name="arch" type="xml">
+            <form string="Process Batch">
+                <header>
+                    <button name="action_start" string="Start Processing" type="object"
+                            class="btn-secondary" invisible="state != 'draft'"/>
+                    <button name="action_done" string="Mark Done" type="object"
+                            class="btn-primary" invisible="state != 'processing'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="date"/>
+                            <field name="facility_id"/>
+                            <field name="waste_stream_id"/>
+                        </group>
+                        <group>
+                            <field name="input_kg"/>
+                            <field name="recovered_kg"/>
+                            <field name="residual_kg"/>
+                            <field name="recovery_rate" widget="percentage"/>
+                            <field name="balance_ok"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Recovered Outputs" name="outputs">
+                            <field name="output_ids">
+                                <list editable="bottom">
+                                    <field name="material_id"/>
+                                    <field name="recovered_kg"/>
+                                    <field name="grade"/>
+                                    <field name="bale_ref"/>
+                                    <field name="market_value" readonly="1"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_process_batch" model="ir.actions.act_window">
+        <field name="name">Process Batches</field>
+        <field name="res_model">ecoflow.process.batch</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

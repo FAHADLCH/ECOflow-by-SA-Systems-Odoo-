@@ -1,0 +1,43 @@
+services:
+  db:
+    image: postgres:16
+    container_name: ecoflow_db
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: odoo
+    volumes:
+      - ecoflow_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "odoo"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  odoo:
+    # Override the Odoo version with: ODOO_TAG=19 docker compose up
+    # Supported tags for this project: 18, 19
+    image: odoo:${ODOO_TAG:-18}
+    container_name: ecoflow_odoo
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      # Host 8070 -> container 8069 (8069 is often used by another local Odoo).
+      - "8070:8069"
+    volumes:
+      - ./addons:/mnt/extra-addons
+      - ./config:/etc/odoo
+      - ecoflow_odoo_data:/var/lib/odoo
+    environment:
+      HOST: db
+      USER: odoo
+      PASSWORD: odoo
+    command: >
+      odoo
+      --config=/etc/odoo/odoo.conf
+      --dev=reload,qweb,xml
+
+volumes:
+  ecoflow_db_data:
+  ecoflow_odoo_data:

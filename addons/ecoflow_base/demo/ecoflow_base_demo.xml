@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="zone_north" model="ecoflow.zone">
+            <field name="name">North Metro</field>
+            <field name="code">N</field>
+        </record>
+        <record id="zone_south" model="ecoflow.zone">
+            <field name="name">South Metro</field>
+            <field name="code">S</field>
+        </record>
+
+        <record id="material_pet" model="ecoflow.material">
+            <field name="name">PET (Plastic #1)</field>
+            <field name="code">PET</field>
+            <field name="waste_stream_id" ref="stream_recycling"/>
+            <field name="market_price">320.0</field>
+        </record>
+        <record id="material_occ" model="ecoflow.material">
+            <field name="name">OCC (Old Corrugated Cardboard)</field>
+            <field name="code">OCC</field>
+            <field name="waste_stream_id" ref="stream_recycling"/>
+            <field name="market_price">110.0</field>
+        </record>
+        <record id="material_alu" model="ecoflow.material">
+            <field name="name">Aluminium</field>
+            <field name="code">ALU</field>
+            <field name="waste_stream_id" ref="stream_recycling"/>
+            <field name="market_price">1450.0</field>
+        </record>
+
+        <record id="site_acme" model="res.partner">
+            <field name="name">Acme Retail Park</field>
+            <field name="is_service_site" eval="True"/>
+            <field name="ecoflow_zone_id" ref="zone_north"/>
+            <field name="street">12 Industrial Way</field>
+            <field name="city">Metro City</field>
+            <field name="geo_lat">51.5095</field>
+            <field name="geo_lng">-0.1180</field>
+        </record>
+        <record id="site_riverside" model="res.partner">
+            <field name="name">Riverside Apartments</field>
+            <field name="is_service_site" eval="True"/>
+            <field name="ecoflow_zone_id" ref="zone_south"/>
+            <field name="street">4 Riverside Drive</field>
+            <field name="city">Metro City</field>
+            <field name="geo_lat">51.4820</field>
+            <field name="geo_lng">-0.0900</field>
+        </record>
+
+        <record id="bin_1" model="ecoflow.bin">
+            <field name="name">BIN/00001</field>
+            <field name="rfid_tag">RFID-0001</field>
+            <field name="bin_type">fel</field>
+            <field name="capacity_l">1100</field>
+            <field name="waste_stream_id" ref="stream_msw"/>
+            <field name="site_id" ref="site_acme"/>
+            <field name="zone_id" ref="zone_north"/>
+            <field name="status">in_service</field>
+        </record>
+        <record id="bin_2" model="ecoflow.bin">
+            <field name="name">BIN/00002</field>
+            <field name="rfid_tag">RFID-0002</field>
+            <field name="bin_type">fel</field>
+            <field name="capacity_l">1100</field>
+            <field name="waste_stream_id" ref="stream_recycling"/>
+            <field name="site_id" ref="site_acme"/>
+            <field name="zone_id" ref="zone_north"/>
+            <field name="status">in_service</field>
+        </record>
+        <record id="bin_3" model="ecoflow.bin">
+            <field name="name">BIN/00003</field>
+            <field name="rfid_tag">RFID-0003</field>
+            <field name="bin_type">wheelie</field>
+            <field name="capacity_l">240</field>
+            <field name="waste_stream_id" ref="stream_organics"/>
+            <field name="site_id" ref="site_riverside"/>
+            <field name="zone_id" ref="zone_south"/>
+            <field name="status">in_service</field>
+        </record>
+    </data>
+</odoo>

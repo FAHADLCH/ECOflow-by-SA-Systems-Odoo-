@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_ecoflow" model="ir.ui.view">
+        <field name="name">res.partner.form.ecoflow</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Service Site" name="ecoflow_site"
+                      invisible="not is_service_site">
+                    <group>
+                        <group>
+                            <field name="ecoflow_zone_id"/>
+                            <field name="gate_code"/>
+                        </group>
+                        <group>
+                            <field name="geo_lat"/>
+                            <field name="geo_lng"/>
+                        </group>
+                    </group>
+                    <field name="access_notes" placeholder="Access notes for drivers..."/>
+                    <field name="bin_ids">
+                        <list>
+                            <field name="name"/>
+                            <field name="bin_type"/>
+                            <field name="waste_stream_id"/>
+                            <field name="status"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="before">
+                <field name="is_service_site"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

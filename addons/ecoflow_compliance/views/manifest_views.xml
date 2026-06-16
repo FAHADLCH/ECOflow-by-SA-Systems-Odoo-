@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_manifest_list" model="ir.ui.view">
+        <field name="name">ecoflow.manifest.list</field>
+        <field name="model">ecoflow.manifest</field>
+        <field name="arch" type="xml">
+            <list string="Manifests" decoration-success="state == 'closed'"
+                  decoration-warning="hazardous" decoration-muted="state == 'cancel'">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="generator_id"/>
+                <field name="facility_id"/>
+                <field name="waste_code_id"/>
+                <field name="total_qty" sum="Total"/>
+                <field name="hazardous"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_manifest_form" model="ir.ui.view">
+        <field name="name">ecoflow.manifest.form</field>
+        <field name="model">ecoflow.manifest</field>
+        <field name="arch" type="xml">
+            <form string="Manifest">
+                <header>
+                    <button name="action_generator_sign" string="Generator Sign" type="object"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_transporter_sign" string="Transporter Sign" type="object"
+                            invisible="state != 'generated'"/>
+                    <button name="action_facility_sign" string="Facility Sign" type="object"
+                            invisible="state != 'transit'"/>
+                    <button name="action_close" string="Close" type="object"
+                            class="btn-primary" invisible="state != 'received'"/>
+                    <button name="action_cancel" string="Cancel" type="object"
+                            invisible="state in ('closed','cancel')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,generated,transit,received,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="date"/>
+                            <field name="generator_id"/>
+                            <field name="transporter_id"/>
+                            <field name="facility_id"/>
+                        </group>
+                        <group>
+                            <field name="waste_code_id"/>
+                            <field name="hazardous"/>
+                            <field name="total_qty"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Lines" name="lines">
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="event_id"/>
+                                    <field name="waste_stream_id"/>
+                                    <field name="qty_kg"/>
+                                    <field name="container_count"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Signatures" name="signatures">
+                            <group>
+                                <field name="generator_sign" readonly="1"/>
+                                <field name="transporter_sign" readonly="1"/>
+                                <field name="facility_sign" readonly="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_manifest" model="ir.actions.act_window">
+        <field name="name">Manifests</field>
+        <field name="res_model">ecoflow.manifest</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

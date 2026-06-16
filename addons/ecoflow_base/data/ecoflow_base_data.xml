@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Sequences -->
+        <record id="seq_ecoflow_bin" model="ir.sequence">
+            <field name="name">ECOFLOW Bin</field>
+            <field name="code">ecoflow.bin</field>
+            <field name="prefix">BIN/</field>
+            <field name="padding">5</field>
+        </record>
+
+        <!-- Default waste streams -->
+        <record id="stream_msw" model="ecoflow.waste.stream">
+            <field name="name">Municipal Solid Waste</field>
+            <field name="code">MSW</field>
+            <field name="hazard_class">none</field>
+            <field name="recyclable" eval="False"/>
+        </record>
+        <record id="stream_recycling" model="ecoflow.waste.stream">
+            <field name="name">Commingled Recycling</field>
+            <field name="code">REC</field>
+            <field name="hazard_class">none</field>
+            <field name="recyclable" eval="True"/>
+        </record>
+        <record id="stream_organics" model="ecoflow.waste.stream">
+            <field name="name">Organics / Green Waste</field>
+            <field name="code">ORG</field>
+            <field name="hazard_class">none</field>
+            <field name="recyclable" eval="True"/>
+        </record>
+        <record id="stream_cd" model="ecoflow.waste.stream">
+            <field name="name">Construction &amp; Demolition</field>
+            <field name="code">CND</field>
+            <field name="hazard_class">low</field>
+            <field name="recyclable" eval="True"/>
+        </record>
+        <record id="stream_hazard" model="ecoflow.waste.stream">
+            <field name="name">Hazardous Waste</field>
+            <field name="code">HAZ</field>
+            <field name="hazard_class">high</field>
+            <field name="recyclable" eval="False"/>
+        </record>
+        <record id="stream_ewaste" model="ecoflow.waste.stream">
+            <field name="name">E-Waste</field>
+            <field name="code">EWST</field>
+            <field name="hazard_class">medium</field>
+            <field name="recyclable" eval="True"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_route_list" model="ir.ui.view">
+        <field name="name">ecoflow.route.list</field>
+        <field name="model">ecoflow.route</field>
+        <field name="arch" type="xml">
+            <list string="Routes" decoration-success="state == 'done'"
+                  decoration-info="state == 'dispatched'" decoration-muted="state == 'cancel'">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="zone_id"/>
+                <field name="vehicle_id"/>
+                <field name="driver_id"/>
+                <field name="stop_count"/>
+                <field name="planned_distance"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_route_form" model="ir.ui.view">
+        <field name="name">ecoflow.route.form</field>
+        <field name="model">ecoflow.route</field>
+        <field name="arch" type="xml">
+            <form string="Route">
+                <header>
+                    <button name="action_load_orders" string="Load Orders" type="object"
+                            class="btn-secondary" invisible="state not in ('draft','planned')"/>
+                    <button name="action_optimize" string="Optimize Sequence" type="object"
+                            class="btn-primary" invisible="state not in ('draft','planned')"/>
+                    <button name="action_dispatch" string="Dispatch" type="object"
+                            invisible="state != 'planned'"/>
+                    <button name="action_complete" string="Complete" type="object"
+                            invisible="state != 'dispatched'"/>
+                    <button name="action_cancel" string="Cancel" type="object"
+                            invisible="state in ('done','cancel')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,planned,dispatched,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="date"/>
+                            <field name="zone_id"/>
+                            <field name="vehicle_id"/>
+                            <field name="driver_id"/>
+                        </group>
+                        <group>
+                            <field name="stop_count"/>
+                            <field name="planned_distance"/>
+                            <field name="depot_lat"/>
+                            <field name="depot_lng"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Stops" name="stops">
+                            <field name="stop_ids">
+                                <list editable="bottom" default_order="sequence">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="order_id"/>
+                                    <field name="site_id"/>
+                                    <field name="distance_from_prev" readonly="1"/>
+                                    <field name="service_state"/>
+                                    <button name="action_service_done" type="object"
+                                            string="Serviced" class="btn-link"
+                                            icon="fa-check"
+                                            invisible="service_state == 'done'"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_route_search" model="ir.ui.view">
+        <field name="name">ecoflow.route.search</field>
+        <field name="model">ecoflow.route</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="zone_id"/>
+                <field name="vehicle_id"/>
+                <filter name="planned" string="Planned" domain="[('state','=','planned')]"/>
+                <filter name="dispatched" string="Dispatched" domain="[('state','=','dispatched')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_zone" string="Zone" context="{'group_by':'zone_id'}"/>
+                    <filter name="group_date" string="Date" context="{'group_by':'date'}"/>
+                    <filter name="group_state" string="Status" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_route" model="ir.actions.act_window">
+        <field name="name">Routes</field>
+        <field name="res_model">ecoflow.route</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_service_event_list" model="ir.ui.view">
+        <field name="name">ecoflow.service.event.list</field>
+        <field name="model">ecoflow.service.event</field>
+        <field name="arch" type="xml">
+            <list string="Service Events">
+                <field name="timestamp"/>
+                <field name="order_id"/>
+                <field name="site_id"/>
+                <field name="bin_id"/>
+                <field name="status" widget="badge"/>
+                <field name="net_weight"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_service_event_form" model="ir.ui.view">
+        <field name="name">ecoflow.service.event.form</field>
+        <field name="model">ecoflow.service.event</field>
+        <field name="arch" type="xml">
+            <form string="Service Event">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="order_id"/>
+                            <field name="bin_id"/>
+                            <field name="site_id"/>
+                            <field name="timestamp"/>
+                            <field name="status"/>
+                            <field name="net_weight"/>
+                        </group>
+                        <group>
+                            <field name="geo_lat"/>
+                            <field name="geo_lng"/>
+                            <field name="note"/>
+                        </group>
+                    </group>
+                    <field name="photo" widget="image" class="oe_avatar"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_service_event" model="ir.actions.act_window">
+        <field name="name">Service Events</field>
+        <field name="res_model">ecoflow.service.event</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

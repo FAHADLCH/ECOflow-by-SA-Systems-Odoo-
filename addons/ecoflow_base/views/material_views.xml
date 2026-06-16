@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_material_list" model="ir.ui.view">
+        <field name="name">ecoflow.material.list</field>
+        <field name="model">ecoflow.material</field>
+        <field name="arch" type="xml">
+            <list string="Materials">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="waste_stream_id"/>
+                <field name="grade"/>
+                <field name="market_price"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_material_form" model="ir.ui.view">
+        <field name="name">ecoflow.material.form</field>
+        <field name="model">ecoflow.material</field>
+        <field name="arch" type="xml">
+            <form string="Material">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="waste_stream_id"/>
+                        </group>
+                        <group>
+                            <field name="grade"/>
+                            <field name="market_price"/>
+                            <field name="currency_id"/>
+                            <field name="uom_name"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_material" model="ir.actions.act_window">
+        <field name="name">Materials</field>
+        <field name="res_model">ecoflow.material</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

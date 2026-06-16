@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ============ Service Order analysis ============ -->
+    <record id="view_service_order_graph" model="ir.ui.view">
+        <field name="name">ecoflow.service.order.graph</field>
+        <field name="model">ecoflow.service.order</field>
+        <field name="arch" type="xml">
+            <graph string="Collections Analysis" sample="1" type="bar">
+                <field name="zone_id"/>
+                <field name="state"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_service_order_pivot" model="ir.ui.view">
+        <field name="name">ecoflow.service.order.pivot</field>
+        <field name="model">ecoflow.service.order</field>
+        <field name="arch" type="xml">
+            <pivot string="Collections Analysis" sample="1">
+                <field name="zone_id" type="row"/>
+                <field name="state" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_service_order_analysis" model="ir.actions.act_window">
+        <field name="name">Collections Analysis</field>
+        <field name="res_model">ecoflow.service.order</field>
+        <field name="view_mode">graph,pivot</field>
+        <field name="context">{'search_default_group_zone': 1}</field>
+    </record>
+
+    <!-- ============ Route analysis ============ -->
+    <record id="view_route_graph" model="ir.ui.view">
+        <field name="name">ecoflow.route.graph</field>
+        <field name="model">ecoflow.route</field>
+        <field name="arch" type="xml">
+            <graph string="Routing Analysis" sample="1" type="line">
+                <field name="date"/>
+                <field name="planned_distance" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_route_pivot" model="ir.ui.view">
+        <field name="name">ecoflow.route.pivot</field>
+        <field name="model">ecoflow.route</field>
+        <field name="arch" type="xml">
+            <pivot string="Routing Analysis" sample="1">
+                <field name="zone_id" type="row"/>
+                <field name="planned_distance" type="measure"/>
+                <field name="stop_count" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_route_analysis" model="ir.actions.act_window">
+        <field name="name">Routing Analysis</field>
+        <field name="res_model">ecoflow.route</field>
+        <field name="view_mode">graph,pivot</field>
+    </record>
+
+    <!-- ============ Recovery / diversion analysis ============ -->
+    <record id="view_process_batch_graph" model="ir.ui.view">
+        <field name="name">ecoflow.process.batch.graph</field>
+        <field name="model">ecoflow.process.batch</field>
+        <field name="arch" type="xml">
+            <graph string="Recovery Analysis" sample="1" type="bar">
+                <field name="waste_stream_id"/>
+                <field name="recovered_kg" type="measure"/>
+                <field name="residual_kg" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_process_batch_pivot" model="ir.ui.view">
+        <field name="name">ecoflow.process.batch.pivot</field>
+        <field name="model">ecoflow.process.batch</field>
+        <field name="arch" type="xml">
+            <pivot string="Recovery Analysis" sample="1">
+                <field name="waste_stream_id" type="row"/>
+                <field name="input_kg" type="measure"/>
+                <field name="recovered_kg" type="measure"/>
+                <field name="residual_kg" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_process_batch_analysis" model="ir.actions.act_window">
+        <field name="name">Recovery &amp; Diversion</field>
+        <field name="res_model">ecoflow.process.batch</field>
+        <field name="view_mode">graph,pivot</field>
+    </record>
+
+    <!-- ============ Weighbridge analysis ============ -->
+    <record id="view_weigh_ticket_graph" model="ir.ui.view">
+        <field name="name">ecoflow.weigh.ticket.graph</field>
+        <field name="model">ecoflow.weigh.ticket</field>
+        <field name="arch" type="xml">
+            <graph string="Weighbridge Analysis" sample="1" type="line">
+                <field name="timestamp"/>
+                <field name="net_weight" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_weigh_ticket_analysis" model="ir.actions.act_window">
+        <field name="name">Weighbridge Analysis</field>
+        <field name="res_model">ecoflow.weigh.ticket</field>
+        <field name="view_mode">graph,pivot</field>
+    </record>
+
+    <!-- ============ Manifest analysis ============ -->
+    <record id="view_manifest_graph" model="ir.ui.view">
+        <field name="name">ecoflow.manifest.graph</field>
+        <field name="model">ecoflow.manifest</field>
+        <field name="arch" type="xml">
+            <graph string="Manifest Analysis" sample="1" type="bar">
+                <field name="state"/>
+                <field name="total_qty" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_manifest_analysis" model="ir.actions.act_window">
+        <field name="name">Manifest Analysis</field>
+        <field name="res_model">ecoflow.manifest</field>
+        <field name="view_mode">graph,pivot</field>
+    </record>
+</odoo>

@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_weigh_ticket_user,weigh.ticket.user,model_ecoflow_weigh_ticket,ecoflow_base.group_ecoflow_user,1,1,1,0
+access_weigh_ticket_manager,weigh.ticket.manager,model_ecoflow_weigh_ticket,ecoflow_base.group_ecoflow_manager,1,1,1,1
+access_process_batch_user,process.batch.user,model_ecoflow_process_batch,ecoflow_base.group_ecoflow_user,1,1,1,0
+access_process_batch_manager,process.batch.manager,model_ecoflow_process_batch,ecoflow_base.group_ecoflow_manager,1,1,1,1
+access_recovery_output_user,recovery.output.user,model_ecoflow_recovery_output,ecoflow_base.group_ecoflow_user,1,1,1,1
+access_recovery_output_manager,recovery.output.manager,model_ecoflow_recovery_output,ecoflow_base.group_ecoflow_manager,1,1,1,1

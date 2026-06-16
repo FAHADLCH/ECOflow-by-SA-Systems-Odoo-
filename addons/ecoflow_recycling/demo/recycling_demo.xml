@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="facility_mrf" model="res.partner">
+            <field name="name">Central MRF</field>
+            <field name="is_company" eval="True"/>
+            <field name="city">Metro City</field>
+        </record>
+
+        <record id="batch_demo_1" model="ecoflow.process.batch">
+            <field name="waste_stream_id" ref="ecoflow_base.stream_recycling"/>
+            <field name="facility_id" ref="facility_mrf"/>
+            <field name="input_kg">10000</field>
+            <field name="residual_kg">1500</field>
+            <field name="state">processing</field>
+        </record>
+        <record id="output_demo_pet" model="ecoflow.recovery.output">
+            <field name="batch_id" ref="batch_demo_1"/>
+            <field name="material_id" ref="ecoflow_base.material_pet"/>
+            <field name="recovered_kg">3000</field>
+            <field name="grade">A</field>
+            <field name="bale_ref">BALE-PET-001</field>
+        </record>
+        <record id="output_demo_occ" model="ecoflow.recovery.output">
+            <field name="batch_id" ref="batch_demo_1"/>
+            <field name="material_id" ref="ecoflow_base.material_occ"/>
+            <field name="recovered_kg">4200</field>
+            <field name="grade">B</field>
+            <field name="bale_ref">BALE-OCC-001</field>
+        </record>
+        <record id="output_demo_alu" model="ecoflow.recovery.output">
+            <field name="batch_id" ref="batch_demo_1"/>
+            <field name="material_id" ref="ecoflow_base.material_alu"/>
+            <field name="recovered_kg">1300</field>
+            <field name="grade">A</field>
+            <field name="bale_ref">BALE-ALU-001</field>
+        </record>
+    </data>
+</odoo>
