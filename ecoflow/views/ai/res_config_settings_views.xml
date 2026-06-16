@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_ecoflow_ai" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.ecoflow.ai</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id"
+               ref="ecoflow.res_config_settings_view_form_ecoflow"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='ecoflow']" position="inside">
+                <block title="Region &amp; Localization" name="ecoflow_region_setting">
+                    <setting string="Operating Region"
+                             help="Tailors the regulatory framework, units and waste-code language to your country/region.">
+                        <div class="content-group">
+                            <div class="row mt8">
+                                <field name="ecoflow_region" class="o_light_label"/>
+                            </div>
+                            <div class="row mt8">
+                                <field name="ecoflow_unit_system" class="o_light_label"/>
+                            </div>
+                            <div class="row mt8">
+                                <field name="ecoflow_default_currency_id" class="o_light_label"/>
+                            </div>
+                            <div class="text-muted mt4">
+                                Framework: <field name="ecoflow_regulatory_framework" readonly="1" class="oe_inline"/>
+                            </div>
+                        </div>
+                    </setting>
+                </block>
+                <block title="AI Intelligence" name="ecoflow_ai_setting">
+                    <setting string="Enable AI Intelligence"
+                             help="Master switch for demand forecasting, predictive bin fill and AI insights.">
+                        <field name="ecoflow_ai_enabled"/>
+                    </setting>
+                    <setting string="Forecast Horizon"
+                             help="How many days ahead the demand forecaster projects."
+                             invisible="not ecoflow_ai_enabled">
+                        <div class="content-group">
+                            <div class="row mt8">
+                                <field name="ecoflow_forecast_horizon"
+                                       class="o_light_label" style="width: 6rem;"/>
+                                <span class="ms-2">days</span>
+                            </div>
+                        </div>
+                    </setting>
+                    <setting string="Bin Full Threshold"
+                             help="Fill percentage at which a bin is considered due for collection."
+                             invisible="not ecoflow_ai_enabled">
+                        <div class="content-group">
+                            <div class="row mt8">
+                                <field name="ecoflow_bin_full_threshold"
+                                       class="o_light_label" style="width: 6rem;"/>
+                                <span class="ms-2">%</span>
+                            </div>
+                        </div>
+                    </setting>
+                    <div class="mt16" invisible="not ecoflow_ai_enabled">
+                        <button name="action_run_ai_now" type="object"
+                                string="Run AI Now" class="btn-primary"
+                                icon="fa-bolt"/>
+                    </div>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

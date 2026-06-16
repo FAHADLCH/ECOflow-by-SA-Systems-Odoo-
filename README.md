@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="ecoflow_dashboard/static/description/sa_logo.png" alt="SA Systems" width="320">
+  <img src="ecoflow/static/description/sa_logo.png" alt="SA Systems" width="320">
 </p>
 
 <h1 align="center">ECOFLOW by SA Systems</h1>
@@ -22,8 +22,8 @@
 **ECOFLOW** turns a waste hauler into a **data-driven environmental operations platform**.
 Every bin lifted, every kilometre driven, every tonne recovered and every compliance
 event is captured **once**, reconciled automatically, and surfaced as an operational
-decision. The suite ships as **seven focused Odoo modules** that install cleanly on a
-single Odoo database and run identically on **Odoo 18.0 and 19.0** from one codebase.
+decision. ECOFLOW ships as a **single Odoo application** that installs cleanly on a
+single Odoo database and runs identically on **Odoo 18.0 and 19.0** from one codebase.
 
 It is **global by design**: prices and recovered-value figures are **multi-currency as
 standard**, and a built-in **regional profile** tailors the regulatory framework, units
@@ -36,17 +36,20 @@ generic global preset).
 
 ---
 
-## Modules
+## What's inside
 
-| Module | Purpose |
-|--------|---------|
-| **ECOFLOW Base** (`ecoflow_base`) | Shared masters: waste streams, materials & commodity pricing, service zones, bins/containers, partner service-site data. |
-| **ECOFLOW Collection** (`ecoflow_collection`) | Service catalog, service orders (demand) and proof-of-service capture (RFID + geo + photo). |
-| **ECOFLOW Routing** (`ecoflow_routing`) | Daily route plans, ordered stops, vehicle/driver assignment and a nearest-neighbour sequencer. |
-| **ECOFLOW Recycling** (`ecoflow_recycling`) | Weighbridge tickets, MRF process batches, recovered outputs/residuals and diversion yield. |
-| **ECOFLOW Compliance** (`ecoflow_compliance`) | Regulatory waste-code library, electronic chain-of-custody manifests and a permit register with expiry tracking. |
-| **ECOFLOW Dashboard** (`ecoflow_dashboard`) | SA Systems branded operations cockpit, KPI tiles, graph/pivot analysis and the central settings panel. |
-| **ECOFLOW AI Intelligence** (`ecoflow_ai`) | On-premise, privacy-first forecasting, predictive bin fill, route scoring, anomaly detection and plain-language insights. |
+ECOFLOW is **one installable app** (`ecoflow`) that bundles seven integrated
+capability areas:
+
+| Capability | Purpose |
+|------------|---------|
+| **Base masters** | Shared masters: waste streams, materials & commodity pricing, service zones, bins/containers, partner service-site data. |
+| **Collection** | Service catalog, service orders (demand) and proof-of-service capture (RFID + geo + photo). |
+| **Routing** | Daily route plans, ordered stops, vehicle/driver assignment and a nearest-neighbour sequencer. |
+| **Recycling** | Weighbridge tickets, MRF process batches, recovered outputs/residuals and diversion yield. |
+| **Compliance** | Regulatory waste-code library, electronic chain-of-custody manifests and a permit register with expiry tracking. |
+| **Cockpit & analytics** | SA Systems branded operations cockpit, KPI tiles, graph/pivot analysis and the central settings panel. |
+| **AI Intelligence** | On-premise, privacy-first forecasting, predictive bin fill, route scoring, anomaly detection and plain-language insights. |
 
 ```mermaid
 flowchart LR
@@ -104,7 +107,7 @@ Or with plain Docker Compose:
 ```bash
 cp config/odoo.conf.example config/odoo.conf   # then edit credentials
 ODOO_TAG=18 docker compose run --rm odoo odoo --config=/etc/odoo/odoo.conf \
-    -d ecoflow -i ecoflow_base,ecoflow_collection,ecoflow_routing,ecoflow_recycling,ecoflow_compliance,ecoflow_dashboard,ecoflow_ai --stop-after-init
+    -d ecoflow -i ecoflow --stop-after-init
 ODOO_TAG=18 docker compose up -d
 ```
 
@@ -114,7 +117,7 @@ See [INSTALL.md](INSTALL.md) for manual / production installation.
 
 ## Quick Tour
 
-1. **Apps → ECOFLOW** then install the suite (the Dashboard app pulls in the rest).
+1. **Apps → ECOFLOW** then install the app.
 2. **ECOFLOW → Settings** — choose your **Operating Region**; units and **default currency** auto-fill.
 3. **Masters** — review waste streams, materials (with market price/tonne) and service zones.
 4. **Collection** — define services, generate service orders, capture proof-of-service.
@@ -144,18 +147,16 @@ sensible platform-wide default.
 
 ## Project Layout
 
-Modules live at the **repository root** (one folder per app), as required by the
-Odoo Apps Store scanner.
+The app is a **single module folder** (`ecoflow/`) at the repository root, as
+required by the Odoo Apps Store scanner. Internally it is organised into domain
+sub-packages (base, collection, routing, recycling, compliance, dashboard, ai).
 
 ```
 .
-├── ecoflow_base/
-├── ecoflow_collection/
-├── ecoflow_routing/
-├── ecoflow_recycling/
-├── ecoflow_compliance/
-├── ecoflow_dashboard/
-├── ecoflow_ai/
+├── ecoflow/                  # the single installable app
+│   ├── models/{base,collection,routing,recycling,compliance,dashboard,ai}/
+│   ├── views/  · data/  · demo/  · security/  · static/
+│   └── __manifest__.py
 ├── config/
 │   └── odoo.conf.example
 ├── docs/                     # architecture, data model, capabilities, roadmap
@@ -169,15 +170,14 @@ Odoo Apps Store scanner.
 
 ## Submission to apps.odoo.com
 
-ECOFLOW ships as a **single paid product**, not seven separate purchases. The
-foundational module **ECOFLOW Base** (`ecoflow_base`) carries the price
-(**$299 / USD**, OPL-1) and every other module depends on it, so one purchase
-unlocks the complete suite. The remaining six modules are published as **free
-add-ons** — they cannot be used without ECOFLOW Base.
+ECOFLOW ships as a **single paid app** — one store listing, one purchase. The
+module **`ecoflow`** carries the price (**$299 / USD**, OPL-1) and contains every
+capability (base masters, collection, routing, recycling, compliance, cockpit and
+AI) in one install.
 
-Each module includes the required `static/description/` assets (icon, banner,
+The app includes the required `static/description/` assets (icon, banner,
 index.html) and a `LICENSE`. The repository follows the store layout: **one
-module folder per app at the root**, with a branch per Odoo series.
+module folder at the root**, with a branch per Odoo series.
 
 - Register the repository URL with the series branch, e.g. `…/ECOflow-by-SA-Systems-Odoo-.git#18.0` (or `#19.0`).
 - The branch name must exactly match the target series; manifests use a matching

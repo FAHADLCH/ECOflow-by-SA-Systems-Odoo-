@@ -1,9 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_waste_code_user,waste.code.user,model_ecoflow_waste_code,ecoflow_base.group_ecoflow_user,1,0,0,0
-access_waste_code_manager,waste.code.manager,model_ecoflow_waste_code,ecoflow_base.group_ecoflow_manager,1,1,1,1
-access_manifest_user,manifest.user,model_ecoflow_manifest,ecoflow_base.group_ecoflow_user,1,1,1,0
-access_manifest_manager,manifest.manager,model_ecoflow_manifest,ecoflow_base.group_ecoflow_manager,1,1,1,1
-access_manifest_line_user,manifest.line.user,model_ecoflow_manifest_line,ecoflow_base.group_ecoflow_user,1,1,1,1
-access_manifest_line_manager,manifest.line.manager,model_ecoflow_manifest_line,ecoflow_base.group_ecoflow_manager,1,1,1,1
-access_permit_user,permit.user,model_ecoflow_permit,ecoflow_base.group_ecoflow_user,1,0,0,0
-access_permit_manager,permit.manager,model_ecoflow_permit,ecoflow_base.group_ecoflow_manager,1,1,1,1

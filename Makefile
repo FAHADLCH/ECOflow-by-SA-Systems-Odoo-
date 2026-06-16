@@ -3,7 +3,7 @@
 
 TAG ?= 18
 DB  ?= ecoflow
-MODULES ?= ecoflow_base,ecoflow_collection,ecoflow_routing,ecoflow_recycling,ecoflow_compliance,ecoflow_dashboard,ecoflow_ai
+MODULES ?= ecoflow
 
 export ODOO_TAG = $(TAG)
 

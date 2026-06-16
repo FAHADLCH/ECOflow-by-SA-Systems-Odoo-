@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- ============================================================
+             Live, today-dated dataset so the Operations Cockpit lights up
+             ============================================================ -->
+
+        <!-- Today's service orders: 3 serviced, 1 missed, 1 still scheduled -->
+        <record id="so_live_1" model="ecoflow.service.order">
+            <field name="site_id" ref="ecoflow.site_acme"/>
+            <field name="service_id" ref="ecoflow.service_rec_fel"/>
+            <field name="scheduled_date" eval="(datetime.now()).strftime('%Y-%m-%d')"/>
+            <field name="state">done</field>
+        </record>
+        <record id="so_live_2" model="ecoflow.service.order">
+            <field name="site_id" ref="ecoflow.site_acme"/>
+            <field name="service_id" ref="ecoflow.service_msw_fel"/>
+            <field name="scheduled_date" eval="(datetime.now()).strftime('%Y-%m-%d')"/>
+            <field name="state">done</field>
+        </record>
+        <record id="so_live_3" model="ecoflow.service.order">
+            <field name="site_id" ref="ecoflow.site_riverside"/>
+            <field name="service_id" ref="ecoflow.service_org_wheelie"/>
+            <field name="scheduled_date" eval="(datetime.now()).strftime('%Y-%m-%d')"/>
+            <field name="state">done</field>
+        </record>
+        <record id="so_live_4" model="ecoflow.service.order">
+            <field name="site_id" ref="ecoflow.site_riverside"/>
+            <field name="service_id" ref="ecoflow.service_rec_fel"/>
+            <field name="scheduled_date" eval="(datetime.now()).strftime('%Y-%m-%d')"/>
+            <field name="state">missed</field>
+        </record>
+        <record id="so_live_5" model="ecoflow.service.order">
+            <field name="site_id" ref="ecoflow.site_acme"/>
+            <field name="service_id" ref="ecoflow.service_msw_fel"/>
+            <field name="scheduled_date" eval="(datetime.now()).strftime('%Y-%m-%d')"/>
+            <field name="state">scheduled</field>
+        </record>
+
+        <!-- Mark the recycling demo batch complete -> diversion & recovery -->
+        <record id="ecoflow.batch_demo_1" model="ecoflow.process.batch">
+            <field name="state">done</field>
+        </record>
+
+        <!-- Posted weighbridge tickets today -> tonnes handled -->
+        <record id="wt_live_1" model="ecoflow.weigh.ticket">
+            <field name="direction">inbound</field>
+            <field name="source">gate</field>
+            <field name="waste_stream_id" ref="ecoflow.stream_recycling"/>
+            <field name="facility_id" ref="ecoflow.facility_mrf"/>
+            <field name="gross_weight">18200</field>
+            <field name="tare_weight">6000</field>
+            <field name="timestamp" eval="(datetime.now()).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="state">posted</field>
+        </record>
+        <record id="wt_live_2" model="ecoflow.weigh.ticket">
+            <field name="direction">inbound</field>
+            <field name="source">gate</field>
+            <field name="waste_stream_id" ref="ecoflow.stream_msw"/>
+            <field name="facility_id" ref="ecoflow.facility_mrf"/>
+            <field name="gross_weight">14700</field>
+            <field name="tare_weight">6000</field>
+            <field name="timestamp" eval="(datetime.now()).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="state">posted</field>
+        </record>
+        <record id="wt_live_3" model="ecoflow.weigh.ticket">
+            <field name="direction">inbound</field>
+            <field name="source">gate</field>
+            <field name="waste_stream_id" ref="ecoflow.stream_organics"/>
+            <field name="facility_id" ref="ecoflow.facility_mrf"/>
+            <field name="gross_weight">15200</field>
+            <field name="tare_weight">6000</field>
+            <field name="timestamp" eval="(datetime.now()).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="state">posted</field>
+        </record>
+
+        <!-- A permit expiring soon -> compliance alert -->
+        <record id="permit_live_expiring" model="ecoflow.permit">
+            <field name="name">TRP-2026-114</field>
+            <field name="permit_type">transport</field>
+            <field name="holder_id" ref="ecoflow.site_acme"/>
+            <field name="valid_from" eval="(datetime.now() + relativedelta(days=-340)).strftime('%Y-%m-%d')"/>
+            <field name="valid_to" eval="(datetime.now() + relativedelta(days=18)).strftime('%Y-%m-%d')"/>
+            <field name="scope">Hazardous waste haulage — metro zone</field>
+        </record>
+
+        <!-- A planned route with sequenced stops -> active routes & distance -->
+        <record id="route_live_1" model="ecoflow.route">
+            <field name="date" eval="(datetime.now()).strftime('%Y-%m-%d')"/>
+            <field name="zone_id" ref="ecoflow.zone_north"/>
+            <field name="state">planned</field>
+            <field name="depot_lat">-33.8688</field>
+            <field name="depot_lng">151.2093</field>
+        </record>
+        <record id="route_live_stop_1" model="ecoflow.route.stop">
+            <field name="route_id" ref="route_live_1"/>
+            <field name="sequence">1</field>
+            <field name="order_id" ref="so_live_1"/>
+            <field name="distance_from_prev">4.2</field>
+        </record>
+        <record id="route_live_stop_2" model="ecoflow.route.stop">
+            <field name="route_id" ref="route_live_1"/>
+            <field name="sequence">2</field>
+            <field name="order_id" ref="so_live_2"/>
+            <field name="distance_from_prev">5.8</field>
+        </record>
+        <record id="route_live_stop_3" model="ecoflow.route.stop">
+            <field name="route_id" ref="route_live_1"/>
+            <field name="sequence">3</field>
+            <field name="order_id" ref="so_live_5"/>
+            <field name="distance_from_prev">3.1</field>
+        </record>
+
+    </data>
+</odoo>

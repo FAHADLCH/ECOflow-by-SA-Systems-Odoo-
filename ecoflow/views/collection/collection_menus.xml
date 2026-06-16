@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_collection_orders" name="Service Orders"
+              parent="ecoflow.menu_ecoflow_operations"
+              action="action_service_order" sequence="10"/>
+    <menuitem id="menu_collection_events" name="Service Events"
+              parent="ecoflow.menu_ecoflow_operations"
+              action="action_service_event" sequence="20"/>
+    <menuitem id="menu_collection_services" name="Services"
+              parent="ecoflow.menu_ecoflow_config"
+              action="action_service" sequence="40"/>
+</odoo>
