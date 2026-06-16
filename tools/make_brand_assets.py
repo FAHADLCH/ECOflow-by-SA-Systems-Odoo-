@@ -1,19 +1,21 @@
 """Master brand-asset generator for ECOFLOW by SA Systems.
 
-Uses the AUTHENTIC high-res SA Systems logo
-(/Users/fahad/Desktop/SAG/sasystems-logo option 2.jpg, CMYK 3557x1685) and
-produces, for every module:
-  static/description/icon.png    512x512  (authentic red "sa" block, rounded)
-  static/description/banner.png  1200x600 (real logo lockup + module glyph)
-  static/description/sa_logo.png ~1400w   (full real logo, charcoal bg, trimmed)
+Source: the authentic high-res SA Systems logo
+(/Users/fahad/Downloads/Sa systems logo.png, transparent RGBA 4308x2574):
+red + grey hexagon honeycomb mark over black "sa systems" wordmark.
 
-Also refreshes the cockpit/product copies. Pure Pillow.
+Produces, for every module:
+  static/description/icon.png    512x512  (honeycomb mark on a charcoal tile)
+  static/description/banner.png  1200x600 (white-text logo lockup + module glyph)
+  static/description/sa_logo.png ~1200w   (white-text logo, transparent)
+
+Plus white-text logo copies for the cockpit, AI center and product site, and a
+dark-text transparent copy for light surfaces. Pure Pillow.
 """
 import os
-import math
-from PIL import Image, ImageDraw, ImageFont, ImageChops
+from PIL import Image, ImageDraw, ImageFont
 
-SRC = "/Users/fahad/Desktop/SAG/sasystems-logo option 2.jpg"
+SRC = "/Users/fahad/Downloads/Sa systems logo.png"
 WS = "/Users/fahad/Desktop/Odoo Apps/Waste Management System "
 ADDONS = os.path.join(WS, "addons")
 PROD = os.path.join(WS, "product", "assets")
@@ -45,50 +47,59 @@ def font(size, weight="bold"):
 
 
 # ---------------------------------------------------------------------------
-# Load + prepare the authentic logo
+# Load + trim the authentic transparent logo
 # ---------------------------------------------------------------------------
-src = Image.open(SRC)
-if src.mode != "RGB":
-    src = src.convert("RGB")
-W, H = src.size
-px = src.load()
-charcoal_bg = px[20, 20][:3]
-red_sample = px[int(W * 0.18), int(H * 0.45)][:3]
-
-# trim uniform charcoal margins -> full logo
-bg = Image.new("RGB", src.size, charcoal_bg)
-bbox = ImageChops.difference(src, bg).getbbox()
-m = 50
-if bbox:
-    bbox = (max(bbox[0] - m, 0), max(bbox[1] - m, 0),
-            min(bbox[2] + m, W), min(bbox[3] + m, H))
-    full = src.crop(bbox)
-else:
-    full = src
+src = Image.open(SRC).convert("RGBA")
+bbox = src.split()[3].getbbox()
+full = src.crop(bbox) if bbox else src
 FW, FH = full.size
 
-# detect the red "sa" block bounding box (authentic icon element)
-xs, ys = [], []
-for y in range(0, H, 4):
-    for x in range(0, W, 4):
-        r, g, b = px[x, y][:3]
-        if r > 150 and g < 90 and b < 90:
-            xs.append(x); ys.append(y)
-rx0, ry0, rx1, ry1 = min(xs), min(ys), max(xs), max(ys)
+
+def white_text(im):
+    """Recolour the near-black wordmark to white; keep red + grey + alpha."""
+    out = im.copy()
+    px = out.load()
+    w, h = out.size
+    for y in range(h):
+        for x in range(w):
+            r, g, b, a = px[x, y]
+            if a > 0 and r < 95 and g < 95 and b < 95:
+                px[x, y] = (255, 255, 255, a)
+    return out
+
+
+FULL_WHITE = white_text(full)
+
+
+def split_mark(im):
+    """Return just the honeycomb mark (logo above the wordmark gap)."""
+    alpha = im.split()[3]
+    sw = 240
+    sh = max(1, int(im.size[1] * sw / im.size[0]))
+    small = alpha.resize((sw, sh))
+    data = list(small.getdata())
+    rows = [sum(data[y * sw + x] > 30 for x in range(sw)) for y in range(sh)]
+    best_len, best_mid, run, start = 0, sh, 0, None
+    for y in range(sh):
+        if rows[y] == 0:
+            if start is None:
+                start = y
+            run += 1
+        else:
+            if run > best_len and start and start > sh * 0.25:
+                best_len, best_mid = run, start + run // 2
+            run, start = 0, None
+    cut = int(best_mid / sh * im.size[1])
+    return im.crop((0, 0, im.size[0], cut))
+
+
+MARK = split_mark(full)
+MW, MH = MARK.size
 
 
 def save_w(im, width, path):
     h = int(im.size[1] * (width / im.size[0]))
     im.resize((width, h), Image.LANCZOS).save(path)
-
-
-def rounded(im, frac=0.22):
-    s = im.size[0]
-    mask = Image.new("L", im.size, 0)
-    ImageDraw.Draw(mask).rounded_rectangle([0, 0, s, s], radius=int(s * frac), fill=255)
-    out = Image.new("RGBA", im.size, (0, 0, 0, 0))
-    out.paste(im, (0, 0), mask)
-    return out
 
 
 def vgrad(w, h, top, bot):
@@ -100,20 +111,7 @@ def vgrad(w, h, top, bot):
     return g
 
 
-# authentic "sa" red block icon (square, rounded) ------------------------------
-# crop TIGHT to the red block only (exclude black frame + "Systems" box)
-inset_x = int((rx1 - rx0) * 0.015)
-inset_y = int((ry1 - ry0) * 0.015)
-crop = src.crop((rx0 + inset_x, ry0 + inset_y, rx1 - inset_x, ry1 - inset_y))
-# square red canvas with even margin, the authentic "sa" centered
-margin = int(max(crop.size) * 0.16)
-side = max(crop.size) + margin * 2
-icon_sq = Image.new("RGB", (side, side), red_sample)
-icon_sq.paste(crop, ((side - crop.size[0]) // 2, (side - crop.size[1]) // 2))
-ICON_BLOCK = icon_sq.resize((512, 512), Image.LANCZOS)
-
-
-# per-module line glyphs (subtle accent, drawn) -------------------------------
+# --- per-module line glyphs --------------------------------------------------
 def g_layers(d, x, y, s, c, lw):
     cx = x + s / 2; w = s * 0.6; h = s * 0.16
     for yy in (0.30, 0.50, 0.70):
@@ -148,15 +146,6 @@ def g_recycle(d, x, y, s, c, lw):
     for k in range(3):
         a0 = 90 + k * 120
         d.arc([cx - r, cy - r, cx + r, cy + r], a0 + 8, a0 + 96, fill=c, width=lw)
-
-
-def g_scale(d, x, y, s, c, lw):
-    cx = x + s / 2; top = y + s * .20
-    d.line([(cx, top), (cx, y + s * .78)], fill=c, width=lw)
-    d.line([(x + s * .22, top), (x + s * .78, top)], fill=c, width=lw)
-    d.line([(x + s * .30, y + s * .80), (x + s * .70, y + s * .80)], fill=c, width=lw)
-    for sx in (x + s * .22, x + s * .78):
-        d.arc([sx - s * .14, top + s * .02, sx + s * .14, top + s * .30], 0, 180, fill=c, width=lw)
 
 
 def g_shield(d, x, y, s, c, lw):
@@ -199,11 +188,6 @@ MODULES = {
 }
 
 
-def text_center(d, cx, cy, s, f, fill):
-    b = d.textbbox((0, 0), s, font=f)
-    d.text((cx - (b[2] - b[0]) / 2 - b[0], cy - (b[3] - b[1]) / 2 - b[1]), s, font=f, fill=fill)
-
-
 def text_left(d, x, cy, s, f, fill):
     b = d.textbbox((0, 0), s, font=f)
     d.text((x - b[0], cy - (b[3] - b[1]) / 2 - b[1]), s, font=f, fill=fill)
@@ -211,24 +195,22 @@ def text_left(d, x, cy, s, f, fill):
 
 
 def make_icon(mod):
-    name = MODULES[mod][0]
     glyph = GLYPH[mod]
     S = 1024
-    base = ICON_BLOCK.resize((S, S), Image.LANCZOS).convert("RGBA")
-    # rounded mask
+    out = Image.new("RGBA", (S, S), (0, 0, 0, 0))
+    tile = vgrad(S, S, CHARCOAL_2, CHARCOAL_3).convert("RGBA")
     mask = Image.new("L", (S, S), 0)
     ImageDraw.Draw(mask).rounded_rectangle([0, 0, S - 1, S - 1], radius=int(S * 0.22), fill=255)
-    out = Image.new("RGBA", (S, S), (0, 0, 0, 0))
-    out.paste(base, (0, 0), mask)
-    d = ImageDraw.Draw(out)
-    # subtle charcoal chip bottom-right holding the module glyph
-    cw = int(S * 0.34)
-    cx0, cy0 = S - cw - int(S * 0.05), S - cw - int(S * 0.05)
-    chip = Image.new("RGBA", (cw, cw), (0, 0, 0, 0))
+    out.paste(tile, (0, 0), mask)
+    mw = int(S * 0.70)
+    mark = MARK.resize((mw, int(MH * mw / MW)), Image.LANCZOS)
+    out.alpha_composite(mark, ((S - mw) // 2, (S - mark.size[1]) // 2 - int(S * 0.03)))
+    cw = int(S * 0.30)
+    cx0, cy0 = S - cw - int(S * 0.055), S - cw - int(S * 0.055)
     cm = Image.new("L", (cw, cw), 0)
-    ImageDraw.Draw(cm).rounded_rectangle([0, 0, cw - 1, cw - 1], radius=int(cw * 0.26), fill=235)
-    chipbg = Image.new("RGBA", (cw, cw), (18, 22, 24, 255))
-    out.paste(chipbg, (cx0, cy0), cm)
+    ImageDraw.Draw(cm).rounded_rectangle([0, 0, cw - 1, cw - 1], radius=int(cw * 0.28), fill=255)
+    chip = Image.new("RGBA", (cw, cw), RED + (255,))
+    out.paste(chip, (cx0, cy0), cm)
     d = ImageDraw.Draw(out)
     glyph(d, cx0 + int(cw * 0.14), cy0 + int(cw * 0.14), int(cw * 0.72), WHITE, int(S * 0.016))
     desc = os.path.join(ADDONS, mod, "static", "description")
@@ -250,19 +232,17 @@ def make_banner(mod):
         d.line([(gx, 0), (gx + Hd, Hd)], fill=(255, 255, 255, 8), width=2)
 
     pad = int(Wd * .065)
-    # REAL logo, composited top-left (charcoal-on-charcoal blends cleanly)
-    logo_w = int(Wd * 0.30)
-    logo = full.resize((logo_w, int(FH * logo_w / FW)), Image.LANCZOS)
-    img.paste(logo, (pad, int(Hd * 0.085)))
+    logo_w = int(Wd * 0.26)
+    logo = FULL_WHITE.resize((logo_w, int(FH * logo_w / FW)), Image.LANCZOS)
+    img.alpha_composite(logo, (pad, int(Hd * 0.10)))
     d = ImageDraw.Draw(img)
 
-    # big module title
-    text_left(d, pad, int(Hd * .52), "ECOFLOW", font(int(Hd * .095), "black"), WHITE)
+    text_left(d, pad, int(Hd * .56), "ECOFLOW", font(int(Hd * .095), "black"), WHITE)
     nf = font(int(Hd * .135), "black")
     b = d.textbbox((0, 0), name, font=nf)
-    d.text((pad - b[0], int(Hd * .60) - b[1] - (b[3] - b[1]) / 2 + int(Hd * .06)), name, font=nf, fill=RED_HI)
-    text_left(d, pad, int(Hd * .82), tag, font(int(Hd * .05), "bold"), WHITE)
-    text_left(d, pad, int(Hd * .89), "by SA Systems  \u00b7  www.sasystems.solutions", font(int(Hd * .034), "reg"), MUTE)
+    d.text((pad - b[0], int(Hd * .63) - b[1]), name, font=nf, fill=RED_HI)
+    text_left(d, pad, int(Hd * .855), tag, font(int(Hd * .05), "bold"), WHITE)
+    text_left(d, pad, int(Hd * .92), "by SA Systems  \u00b7  www.sasystems.solutions", font(int(Hd * .033), "reg"), MUTE)
 
     gx, gy, gs = int(Wd * .66), int(Hd * .26), int(Hd * .54)
     glyph(d, gx, gy, gs, (255, 255, 255), int(Hd * .012))
@@ -273,17 +253,17 @@ def make_banner(mod):
 
 
 if __name__ == "__main__":
-    # distribute the full real logo everywhere
     for mod in MODULES:
         desc = os.path.join(ADDONS, mod, "static", "description")
         os.makedirs(desc, exist_ok=True)
-        save_w(full, 1400, os.path.join(desc, "sa_logo.png"))
+        save_w(FULL_WHITE, 1200, os.path.join(desc, "sa_logo.png"))
         make_icon(mod)
         make_banner(mod)
         print("brand assets:", mod)
-    # cockpit + AI + product copies (charcoal-bg full logo)
     for d in (DASH_IMG, AI_IMG, PROD):
         os.makedirs(d, exist_ok=True)
-        save_w(full, 1200, os.path.join(d, "sa_systems_logo.png"))
-    save_w(full, 1600, os.path.join(PROD, "sa_systems_logo_full.png"))
-    print("DONE charcoal", "#%02X%02X%02X" % charcoal_bg, "red", "#%02X%02X%02X" % red_sample)
+        save_w(FULL_WHITE, 1200, os.path.join(d, "sa_systems_logo.png"))
+    save_w(FULL_WHITE, 1800, os.path.join(PROD, "sa_systems_logo_full.png"))
+    save_w(full, 1800, os.path.join(PROD, "sa_systems_logo_dark.png"))
+    save_w(full, 1200, os.path.join(PROD, "sa_systems_logo_trans.png"))
+    print("DONE - mark", MARK.size, "full", full.size)
