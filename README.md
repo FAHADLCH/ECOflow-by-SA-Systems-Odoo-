@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="addons/ecoflow_dashboard/static/description/sa_logo.png" alt="SA Systems" width="320">
+  <img src="ecoflow_dashboard/static/description/sa_logo.png" alt="SA Systems" width="320">
 </p>
 
 <h1 align="center">ECOFLOW by SA Systems</h1>
@@ -45,7 +45,7 @@ generic global preset).
 | **ECOFLOW Routing** (`ecoflow_routing`) | Daily route plans, ordered stops, vehicle/driver assignment and a nearest-neighbour sequencer. |
 | **ECOFLOW Recycling** (`ecoflow_recycling`) | Weighbridge tickets, MRF process batches, recovered outputs/residuals and diversion yield. |
 | **ECOFLOW Compliance** (`ecoflow_compliance`) | Regulatory waste-code library, electronic chain-of-custody manifests and a permit register with expiry tracking. |
-| **ECOFLOW Dashboard & Branding** (`ecoflow_dashboard`) | SA Systems branded operations cockpit, KPI tiles, graph/pivot analysis and the central settings panel. |
+| **ECOFLOW Dashboard** (`ecoflow_dashboard`) | SA Systems branded operations cockpit, KPI tiles, graph/pivot analysis and the central settings panel. |
 | **ECOFLOW AI Intelligence** (`ecoflow_ai`) | On-premise, privacy-first forecasting, predictive bin fill, route scoring, anomaly detection and plain-language insights. |
 
 ```mermaid
@@ -144,16 +144,18 @@ sensible platform-wide default.
 
 ## Project Layout
 
+Modules live at the **repository root** (one folder per app), as required by the
+Odoo Apps Store scanner.
+
 ```
 .
-├── addons/
-│   ├── ecoflow_base/
-│   ├── ecoflow_collection/
-│   ├── ecoflow_routing/
-│   ├── ecoflow_recycling/
-│   ├── ecoflow_compliance/
-│   ├── ecoflow_dashboard/
-│   └── ecoflow_ai/
+├── ecoflow_base/
+├── ecoflow_collection/
+├── ecoflow_routing/
+├── ecoflow_recycling/
+├── ecoflow_compliance/
+├── ecoflow_dashboard/
+├── ecoflow_ai/
 ├── config/
 │   └── odoo.conf.example
 ├── docs/                     # architecture, data model, capabilities, roadmap
@@ -167,10 +169,14 @@ sensible platform-wide default.
 
 ## Submission to apps.odoo.com
 
-This suite is packaged for the **Odoo App Store** as a paid app (**$5 / USD**, OPL-1).
+This suite is packaged for the **Odoo App Store** as a paid app (**$10 / USD**, OPL-1).
 Each module includes the required `static/description/` assets (icon, banner, index.html)
-and a `LICENSE`. To submit, upload each module folder under `addons/` and reuse the
-generated `static/description/index.html` as the listing body.
+and a `LICENSE`. The repository follows the store layout: **one module folder per app at
+the root**, with a branch per Odoo series.
+
+- Register the repository URL with the series branch, e.g. `…/ECOflow-by-SA-Systems-Odoo-.git#18.0` (or `#19.0`).
+- The branch name must exactly match the target series; manifests use a matching
+  `<series>.1.0.0` version (e.g. `18.0.1.0.0` on `#18.0`).
 
 ---
 

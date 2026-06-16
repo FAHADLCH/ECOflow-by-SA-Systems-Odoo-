@@ -5,7 +5,7 @@ Odoo Apps store renders on the product page.
 import os
 
 WS = "/Users/fahad/Desktop/Odoo Apps/Waste Management System "
-ADDONS = os.path.join(WS, "addons")
+ADDONS = WS  # modules live at repo root (Odoo Apps Store layout)
 
 RED = "#cc0000"
 RED_HI = "#e8482c"

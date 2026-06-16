@@ -2,7 +2,7 @@
 import os
 import re
 
-ADDONS = "/Users/fahad/Desktop/Odoo Apps/Waste Management System /addons"
+ADDONS = "/Users/fahad/Desktop/Odoo Apps/Waste Management System "
 MODULES = ["ecoflow_base", "ecoflow_collection", "ecoflow_routing",
            "ecoflow_recycling", "ecoflow_compliance", "ecoflow_dashboard",
            "ecoflow_ai"]

@@ -17,7 +17,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 SRC = "/Users/fahad/Downloads/Sa systems logo.png"
 WS = "/Users/fahad/Desktop/Odoo Apps/Waste Management System "
-ADDONS = os.path.join(WS, "addons")
+ADDONS = WS  # modules live at repo root (Odoo Apps Store layout)
 PROD = os.path.join(WS, "product", "assets")
 DASH_IMG = os.path.join(ADDONS, "ecoflow_dashboard", "static", "src", "img")
 AI_IMG = os.path.join(ADDONS, "ecoflow_ai", "static", "src", "img")

@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
 {
-    "name": "ECOFLOW Dashboard & Branding",
-    # Series-agnostic version so the module installs on Odoo 18 and 19
-    # alike (a "19.0.x" string is rejected by Odoo 18, and vice-versa).
-    # Odoo prefixes the running series automatically, so this reports as
-    # 1.0 on whichever series is running.
-    "version": "1.0.0",
+    "name": "ECOFLOW Dashboard",
+    "version": "18.0.1.0.0",
     "summary": "SA Systems branded cockpit, KPI dashboards, graphical reporting and settings",
     "description": """
 ECOFLOW Dashboard & Branding
@@ -21,7 +17,7 @@ Compatible with Odoo 18.0 and 19.0.
     "support": "info@sasystems.solutions",
     "category": "Industries",
     "license": "OPL-1",
-    "price": 5.00,
+    "price": 10.00,
     "currency": "USD",
     "depends": [
         "web",

@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "ECOFLOW Base",
-    # Series-agnostic version so the module installs on Odoo 18 and 19
-    # alike (a "19.0.x" string is rejected by Odoo 18, and vice-versa).
-    # Odoo prefixes the running series automatically, so this reports as
-    # 1.0 on whichever series is running.
-    "version": "1.0.0",
+    "version": "18.0.1.0.0",
     "summary": "Shared foundation for the ECOFLOW environmental operations ERP",
     "description": """
 ECOFLOW Base
@@ -20,7 +16,7 @@ waste streams, materials, service zones, bins/containers and partner
     "support": "info@sasystems.solutions",
     "category": "Industries",
     "license": "OPL-1",
-    "price": 5.00,
+    "price": 10.00,
     "currency": "USD",
     "depends": ["base", "mail", "stock"],
     "data": [

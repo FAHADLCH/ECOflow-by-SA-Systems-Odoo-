@@ -26,7 +26,10 @@ services:
       # Host 8070 -> container 8069 (8069 is often used by another local Odoo).
       - "8070:8069"
     volumes:
-      - ./addons:/mnt/extra-addons
+      # Modules live at the repo root (Odoo Apps Store requirement: one folder
+      # per app at the root). Mounting the repo root exposes them as addons;
+      # non-module folders (config, tools, docs, product) are ignored by Odoo.
+      - .:/mnt/extra-addons
       - ./config:/etc/odoo
       - ecoflow_odoo_data:/var/lib/odoo
     environment:

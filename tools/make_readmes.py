@@ -2,7 +2,7 @@
 import ast
 import os
 
-ADDONS = "/Users/fahad/Desktop/Odoo Apps/Waste Management System /addons"
+ADDONS = "/Users/fahad/Desktop/Odoo Apps/Waste Management System "
 
 FEATURES = {
     "ecoflow_base": [

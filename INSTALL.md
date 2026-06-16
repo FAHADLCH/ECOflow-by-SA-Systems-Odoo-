@@ -82,8 +82,9 @@ Swap `ODOO_TAG=18` for `ODOO_TAG=19` to test on Odoo 19.
 
 ## 4. Install into an existing Odoo (no Docker)
 
-1. Copy the `addons/` folder contents into your Odoo `addons_path`
-   (or add this `addons/` directory to `addons_path` in your `odoo.conf`).
+1. Copy the module folders (`ecoflow_base/`, `ecoflow_collection/`, …) from the
+   repository root into your Odoo `addons_path`
+   (or add this repository directory to `addons_path` in your `odoo.conf`).
 2. Restart Odoo and **Update Apps List** (developer mode).
 3. Install **ECOFLOW Base** — dependencies pull in automatically. Then install
    Collection, Routing, Recycling, and Compliance as needed.

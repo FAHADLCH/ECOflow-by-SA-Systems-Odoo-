@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "ECOFLOW AI Intelligence",
-    # Series-agnostic version so the module installs on Odoo 18 and 19
-    # alike (a "19.0.x" string is rejected by Odoo 18, and vice-versa).
-    # Odoo prefixes the running series automatically, so this reports as
-    # 1.0 on whichever series is running.
-    "version": "1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Industries",
     "summary": "AI-powered demand forecasting, smart dispatch, anomaly "
                "detection and operational insights for ECOFLOW.",
@@ -29,7 +25,7 @@ No data leaves your server. All models are deterministic and explainable.
     "website": "https://sasystems.solutions/custom-web-app-development",
     "support": "info@sasystems.solutions",
     "license": "OPL-1",
-    "price": 5.00,
+    "price": 10.00,
     "currency": "USD",
     "depends": [
         "ecoflow_dashboard",
