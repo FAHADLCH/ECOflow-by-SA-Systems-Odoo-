@@ -169,10 +169,15 @@ Odoo Apps Store scanner.
 
 ## Submission to apps.odoo.com
 
-This suite is packaged for the **Odoo App Store** as a paid app (**$10 / USD**, OPL-1).
-Each module includes the required `static/description/` assets (icon, banner, index.html)
-and a `LICENSE`. The repository follows the store layout: **one module folder per app at
-the root**, with a branch per Odoo series.
+ECOFLOW ships as a **single paid product**, not seven separate purchases. The
+foundational module **ECOFLOW Base** (`ecoflow_base`) carries the price
+(**$299 / USD**, OPL-1) and every other module depends on it, so one purchase
+unlocks the complete suite. The remaining six modules are published as **free
+add-ons** — they cannot be used without ECOFLOW Base.
+
+Each module includes the required `static/description/` assets (icon, banner,
+index.html) and a `LICENSE`. The repository follows the store layout: **one
+module folder per app at the root**, with a branch per Odoo series.
 
 - Register the repository URL with the series branch, e.g. `…/ECOflow-by-SA-Systems-Odoo-.git#18.0` (or `#19.0`).
 - The branch name must exactly match the target series; manifests use a matching

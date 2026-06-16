@@ -16,7 +16,7 @@ assignment and a nearest-neighbour stop sequencer. Compatible with Odoo
     "support": "info@sasystems.solutions",
     "category": "Industries",
     "license": "OPL-1",
-    "price": 10.00,
+    "price": 0.00,
     "currency": "USD",
     "depends": ["ecoflow_collection", "fleet"],
     "data": [

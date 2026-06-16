@@ -17,7 +17,7 @@ Compatible with Odoo 18.0 and 19.0.
     "support": "info@sasystems.solutions",
     "category": "Industries",
     "license": "OPL-1",
-    "price": 10.00,
+    "price": 0.00,
     "currency": "USD",
     "depends": [
         "web",
