@@ -7,24 +7,17 @@
     "description": """
 ECOFLOW Waste Management
 ========================
+
 A complete, AI-native ERP for environmental-services operators, delivered as a
 single application. ECOFLOW covers the full operational lifecycle:
 
-* **Masters** — waste streams, recoverable materials, service zones and a
-  bin / container registry, with multi-currency commodity pricing.
-* **Collection** — service catalog (flat / per-lift / per-tonne), service
-  orders and proof-of-service capture (RFID + geo + photo).
-* **Routing** — daily route plans, nearest-neighbour stop sequencing and
-  vehicle / driver dispatch.
-* **Recycling** — weighbridge tickets, MRF process batches with mass-balance
-  checks, recovered outputs and diversion / recovery yield.
-* **Compliance** — regulatory waste-code library, electronic chain-of-custody
-  manifests and a permit register with expiry tracking.
-* **Cockpit & analytics** — a branded operations cockpit, KPI tiles and
-  graph / pivot reporting across every domain.
-* **AI intelligence** — on-premise, privacy-first demand forecasting,
-  predictive bin fill-levels, route efficiency scoring, anomaly detection and a
-  plain-language insights engine. No data leaves your server.
+- **Masters** -- waste streams, recoverable materials, service zones and a bin / container registry, with multi-currency commodity pricing.
+- **Collection** -- service catalog (flat / per-lift / per-tonne), service orders and proof-of-service capture (RFID + geo + photo).
+- **Routing** -- daily route plans, nearest-neighbour stop sequencing and vehicle / driver dispatch.
+- **Recycling** -- weighbridge tickets, MRF process batches with mass-balance checks, recovered outputs and diversion / recovery yield.
+- **Compliance** -- regulatory waste-code library, electronic chain-of-custody manifests and a permit register with expiry tracking.
+- **Cockpit & analytics** -- a branded operations cockpit, KPI tiles and graph / pivot reporting across every domain.
+- **AI intelligence** -- on-premise, privacy-first demand forecasting, predictive bin fill-levels, route efficiency scoring, anomaly detection and a plain-language insights engine. No data leaves your server.
 
 Region-aware throughout (regulatory framework, units and default currency).
 Compatible with Odoo Community and Enterprise.
