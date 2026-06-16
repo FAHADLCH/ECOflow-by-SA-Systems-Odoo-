@@ -6,7 +6,7 @@
         <field name="inherit_id"
                ref="ecoflow.res_config_settings_view_form_ecoflow"/>
         <field name="arch" type="xml">
-            <xpath expr="//app[@name='ecoflow_dashboard']" position="inside">
+            <xpath expr="//app[@name='ecoflow']" position="inside">
                 <block title="Region &amp; Localization" name="ecoflow_region_setting">
                     <setting string="Operating Region"
                              help="Tailors the regulatory framework, units and waste-code language to your country/region.">

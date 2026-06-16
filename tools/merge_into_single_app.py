@@ -108,6 +108,13 @@ def rewrite(text):
     for _, mod in DOMAINS:
         # external-id / template / tag prefixes: 'ecoflow_base.' -> 'ecoflow.'
         text = text.replace(mod + ".", "ecoflow.")
+        # asset / image URL paths: '/ecoflow_dashboard/static/' -> '/ecoflow/static/'
+        text = text.replace("/" + mod + "/", "/ecoflow/")
+        # quoted standalone module token (settings <app name="...">, {'module': '...'})
+        # safe: filenames like "ecoflow_base_data.xml" keep a trailing char, so
+        # the closing quote never immediately follows the bare module name.
+        text = text.replace('"' + mod + '"', '"ecoflow"')
+        text = text.replace("'" + mod + "'", "'ecoflow'")
     return text
 
 

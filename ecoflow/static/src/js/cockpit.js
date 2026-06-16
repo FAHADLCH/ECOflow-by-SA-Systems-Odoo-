@@ -12,7 +12,7 @@ export class EcoflowCockpit extends Component {
         this.orm = useService("orm");
         this.action = useService("action");
         this.state = useState({ kpis: {}, loading: true });
-        this.logoUrl = "/ecoflow_dashboard/static/src/img/sa_systems_logo.png";
+        this.logoUrl = "/ecoflow/static/src/img/sa_systems_logo.png";
 
         onWillStart(async () => {
             await this.loadKpis();

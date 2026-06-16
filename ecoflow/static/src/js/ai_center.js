@@ -19,7 +19,7 @@ export class EcoflowAiCenter extends Component {
         this.orm = useService("orm");
         this.action = useService("action");
         this.notification = useService("notification");
-        this.logoUrl = "/ecoflow_dashboard/static/src/img/sa_systems_logo.png";
+        this.logoUrl = "/ecoflow/static/src/img/sa_systems_logo.png";
         this.state = useState({
             kpis: {},
             ai: { insights: [], charts: {} },
